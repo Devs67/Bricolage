@@ -154,8 +154,10 @@
           ${p.best ? `<span class="best-tag">★ Best project</span>` : ""}
           <span class="card__note" aria-hidden="true">open it →</span>
         </span>
-        <span class="card__title">${esc(p.title)}</span>
-        <span class="card__meta">${esc(p.student)} · ${esc(p.category)}</span>
+        <span class="card__sticky">
+          <span class="card__title">${esc(p.title)}</span>
+          <span class="card__meta">${esc(p.student)} · ${esc(p.category)}</span>
+        </span>
       </button>
     </li>`;
   };
