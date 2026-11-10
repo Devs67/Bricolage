@@ -740,8 +740,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   max-width: 40ch;
   color: #B9BEC6;
 }
+.site-footer__def {
+  margin: clamp(40px, 6vw, 72px) 0 0;
+  font-family: var(--f-hand);
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1.2;
+  color: var(--marker);
+}
+.site-footer__def b { font-weight: 400; text-decoration: underline; text-underline-offset: 4px; }
 .site-footer__meta {
-  margin: clamp(48px, 8vw, 100px) 0 0;
+  margin: 16px 0 0;
   font-family: var(--f-mono);
   font-size: 12px;
   letter-spacing: 0.06em;
