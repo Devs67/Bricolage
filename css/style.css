@@ -236,8 +236,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   border: 6px solid transparent;
   border-left: 8px solid var(--marker);
 }
-/* the scale replaces the hero's own left ruler */
+/* the scale replaces the hero's own left ruler, and the browser's scrollbar */
 .has-scale .mat__ruler--left { display: none; }
+html.has-scale { scrollbar-width: none; }
+html.has-scale::-webkit-scrollbar { display: none; }
 .mat__ruler--top span { top: 2px; transform: translateX(4px); }
 .mat__ruler--left span { left: 3px; transform: translateY(3px); }
 
