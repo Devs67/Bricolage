@@ -424,7 +424,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .about__lead {
   margin: 0;
-  max-width: 24ch;
+  max-width: 42ch;
+  text-wrap: pretty;
   font-family: var(--f-display);
   font-variation-settings: "wdth" 90, "wght" 500;
   font-size: clamp(28px, 4.2vw, 60px);
