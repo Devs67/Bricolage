@@ -31,6 +31,22 @@
     })
   );
 
+  /* Menu: each letter sketches in and prints like the DESIGN letters.
+     --i = order across the whole menu (load), --j = order within its word (hover). */
+  const menu = $(".menu");
+  if (menu) {
+    let i = 0;
+    $$(".menu a").forEach((a) => {
+      const word = a.textContent.trim();
+      a.setAttribute("aria-label", word);
+      a.innerHTML = [...word]
+        .map((ch, j) => (ch === " " ? " " :
+          `<span class="ml" data-l="${ch}" style="--i:${i++};--j:${j}" aria-hidden="true">${ch}</span>`))
+        .join("");
+    });
+    setTimeout(() => menu.classList.add("menu--ready"), 0.6e3 + i * 50 + 500);
+  }
+
   /* ---------- Cutting-mat ruler numbers ---------- */
   const rulerTop = $(".mat__ruler--top");
   const rulerLeft = $(".mat__ruler--left");
