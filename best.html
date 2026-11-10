@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Best Projects — Design MYP to DP</title>
+  <meta name="description" content="The best student design projects from MYP 1 to DP 2, and how they were chosen.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&family=Reenie+Beanie&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip" href="#best">Skip to best projects</a>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Home">
+      <!-- Replace this box with: <img src="assets/school-logo.png" alt="School name"> -->
+      <span class="logo__placeholder">School Logo</span>
+    </a>
+    <a class="dept" href="index.html#projects">All projects</a>
+  </header>
+
+  <main>
+    <!-- ===== Banner ===== -->
+    <section class="mat mat--short" id="top" aria-labelledby="hero-title">
+      <div class="mat__ruler mat__ruler--top" aria-hidden="true"></div>
+      <div class="mat__ruler mat__ruler--left" aria-hidden="true"></div>
+
+      <div class="hero">
+        <a class="crumb" href="index.html">← Back to Design Projects</a>
+        <h1 class="hero__word hero__word--sm" id="hero-title" aria-label="Best projects">
+          <span class="l" style="--i:0" data-l="B" aria-hidden="true">B</span><span class="l" style="--i:1" data-l="E" aria-hidden="true">E</span><span class="l" style="--i:2" data-l="S" aria-hidden="true">S</span><span class="l" style="--i:3" data-l="T" aria-hidden="true">T</span>
+        </h1>
+        <div class="dim" aria-hidden="true">
+          <span class="dim__line"></span>
+          <span class="dim__label">Projects · across MYP 1 → DP 2</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== How we choose ===== -->
+    <section class="criteria" aria-labelledby="criteria-title">
+      <h2 class="section-label" id="criteria-title">How we choose</h2>
+      <p class="criteria__lead reveal">
+        Every best project is picked by the design team. Each one stands out in at least one of these six areas —
+        the badges on a project show which.
+      </p>
+      <ul class="criteria__list" id="criteria"></ul>
+    </section>
+
+    <!-- ===== All best projects ===== -->
+    <section class="best" id="best" aria-labelledby="best-title">
+      <div class="gallery__head">
+        <h2 class="gallery__title" id="best-title">The picks</h2>
+        <p class="gallery__count" id="best-count" aria-live="polite"></p>
+      </div>
+      <div class="chips best__chips" id="best-chips" aria-label="Filter by strength"></div>
+      <ul class="spotlight__list spotlight__list--all" id="best-grid"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="site-footer__big">Want your work here?</p>
+    <p class="site-footer__small">Talk to your design facilitator about submitting your project.</p>
+    <p class="site-footer__meta">Design Department · MYP &amp; DP</p>
+  </footer>
+
+  <!-- ===== Project detail ===== -->
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+    <div class="sheet__inner" data-lenis-prevent>
+      <button class="sheet__close" id="sheet-close" aria-label="Close project">Close ✕</button>
+      <div id="sheet-body"></div>
+    </div>
+  </dialog>
+
+  <script src="data/projects.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
