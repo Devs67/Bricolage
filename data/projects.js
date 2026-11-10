@@ -62,6 +62,23 @@ window.SHOWCASE = {
 
   projects: [
     {
+      id: "cardboard-air-fryer",
+      title: "Cardboard Air Fryer Prototype",
+      student: "Vihaan C.",
+      grade: "MYP 2",
+      year: "2025–26",
+      classOf: 2031,
+      type: "Physical",
+      category: "Product",
+      facilitator: "",
+      problem: "A full-size cardboard model to test the size, layout and controls of an air fryer before making it for real.",
+      designedFor: "Home cooks",
+      tools: ["Cardboard", "Plastic sheet"],
+      unit: "",
+      images: ["assets/projects/cardboard-air-fryer-1.jpg"],
+      links: []
+    },
+    {
       id: "assistive-cutlery-grip",
       title: "Assistive Cutlery Grip",
       student: "Meera K.",

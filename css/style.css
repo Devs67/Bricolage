@@ -95,6 +95,26 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .dept { transition: background 0.2s, color 0.2s; }
 .dept:hover { background: var(--ink); color: var(--paper); }
 
+/* Site name, joined to the logo box like a label */
+.site-header__left { display: flex; align-items: stretch; }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  margin-left: -1.5px;
+  padding: 0 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+  font-family: var(--f-display);
+  font-variation-settings: "wdth" 120, "wght" 800;
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.brand:hover { color: var(--marker); }
+
 /* ---------- Hero: cutting mat ---------- */
 .mat {
   position: relative;
@@ -800,7 +820,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   overflow: hidden;
   margin-top: 16px;
 }
-.sheet__media img { width: 100%; height: 100%; object-fit: cover; }
+.sheet__media img { width: 100%; height: 100%; object-fit: contain; background: var(--paper-2); }
 .sheet__thumbs { display: flex; gap: 8px; margin-top: 8px; overflow-x: auto; }
 .sheet__thumbs button { flex: 0 0 auto; width: 88px; aspect-ratio: 4/3; padding: 0; border: 1.5px solid var(--ink); background: none; opacity: .6; }
 .sheet__thumbs button[aria-current="true"] { opacity: 1; outline: 3px solid var(--marker); }
@@ -1098,6 +1118,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 760px) {
   .site-header { padding-top: 10px; }
   .logo__placeholder, .dept { font-size: 11px; padding: 7px 10px; }
+  .brand { font-size: 14px; padding: 0 10px; }
   .mat { padding-top: 100px; }
   .hero__word { font-size: 23vw; }
   .sticker--myp, .sticker--dp { right: -0.1em; }
