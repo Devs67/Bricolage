@@ -47,16 +47,16 @@
     rulerLeft.append(s);
   }
 
-  /* ---------- Roller: a ruler-style scrollbar on the right.
+  /* ---------- Roller: a ruler-style scrollbar on the left, numbered like the mat.
      The green fill shows how far you've come. The handle is a scale needle on a hub:
      it slides down the ruler and spins fast as you scroll.
      Drag it (or click the ruler) to move the page. ---------- */
   const roller = document.createElement("div");
   roller.className = "roller";
   roller.setAttribute("aria-hidden", "true");
-  roller.innerHTML = `<span class="roller__channel"><span class="roller__fill"></span></span>
+  roller.innerHTML = `<span class="roller__nums"></span><span class="roller__channel"><span class="roller__fill"></span></span>
     <svg class="roller__knob" viewBox="0 0 100 100">
-      <g class="roller__needle"><g transform="rotate(-90 50 50)">
+      <g class="roller__needle"><g transform="rotate(90 50 50)">
         <path d="M47.6 50 L49.2 6 H50.8 L52.4 50 Z"/>
         <path d="M47 50 H53 V66 H47 Z"/>
         <circle cx="50" cy="70" r="7"/>
@@ -85,8 +85,15 @@
       needle.style.transform = `rotate(${Math.round(turn / 360) * 360}deg)`;
     }, 180);
   };
+  // numbers every 120px, like the cutting mat's printed scale
+  const numberRoller = () => {
+    let html = "";
+    for (let y = 120, n = 1; y < window.innerHeight; y += 120, n++) html += `<span style="top:${y}px">${n * 5}</span>`;
+    $(".roller__nums", roller).innerHTML = html;
+  };
+  numberRoller();
   window.addEventListener("scroll", moveRoller, { passive: true });
-  window.addEventListener("resize", moveRoller);
+  window.addEventListener("resize", () => { numberRoller(); moveRoller(); });
   new ResizeObserver(moveRoller).observe(document.body);
 
   let rolling = false;
@@ -208,16 +215,16 @@
     return `<li class="card" style="view-transition-name: c-${esc(p.id)}">
       <button class="card__btn js-open" data-id="${esc(p.id)}">
         <span class="card__media">${media}
-          <span class="card__badges">
-            <span class="card__badge">${esc(p.grade)}</span>
-            ${p.studentLed ? `<span class="card__badge card__badge--led">Student-led</span>` : ""}
-          </span>
-          ${p.best ? `<span class="best-tag">★ Best project</span>` : ""}
           <span class="card__note" aria-hidden="true">open it →</span>
         </span>
+        <span class="card__badges">
+          <span class="card__badge">${esc(p.grade)}</span>
+          ${p.studentLed ? `<span class="card__badge card__badge--led">Student-led</span>` : ""}
+        </span>
+        ${p.best ? `<span class="best-tag">★ Best project</span>` : ""}
         <span class="card__sticky">
           <span class="card__title">${esc(p.title)}</span>
-          <span class="card__meta">${esc(p.student)} · ${esc(p.category)}</span>
+          <span class="card__meta"><b class="card__student student">${esc(p.student)}</b> · ${esc(p.category)}</span>
         </span>
       </button>
     </li>`;
@@ -258,21 +265,24 @@
   const strengthsHTML = (p) =>
     `<span class="strengths">${(p.strengths || []).map((s) => `<span>${esc(s)}</span>`).join("")}</span>`;
 
-  // Each best project is drawn as a blueprint sheet: framed picture, stamp, teacher's note, title block.
-  const drawHTML = (p, i, all) => {
+  // Best and student-led projects are taped-up paper sheets: framed picture, stamp, handwritten note, title block.
+  const drawHTML = (p, i, all, led = false) => {
     const media = p.images && p.images.length
       ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
       : placeholder(p);
     const no = (n) => String(n).padStart(2, "0");
+    const note = led ? p.problem : p.why;
     return `<li class="draw reveal">
       <button class="draw__btn js-open" data-id="${esc(p.id)}">
-        <span class="draw__frame">${media}<span class="draw__stamp">★ Best project</span></span>
+        <span class="draw__tape draw__tape--grade">${esc(p.grade)}</span>
+        <span class="draw__tape draw__tape--tag">${led ? "Student-led" : "★ Best project"}</span>
+        <span class="draw__frame">${media}</span>
         <span class="draw__dim" aria-hidden="true"><span>${esc(p.type || p.category)}</span></span>
-        ${p.why ? `<span class="draw__note">${esc(p.why)}</span>` : ""}
+        ${note ? `<span class="draw__note">${esc(note)}</span>` : ""}
         <span class="draw__block">
           <span class="draw__cell draw__cell--title"><small>Project</small>${esc(p.title)}</span>
           <span class="draw__cell"><small>Sheet</small>${no(i + 1)} / ${no(all.length)}</span>
-          <span class="draw__cell"><small>Designed by</small>${esc(p.student)}</span>
+          <span class="draw__cell"><small>Designed by</small><b class="student">${esc(p.student)}</b></span>
           <span class="draw__cell"><small>Grade</small>${esc(p.grade)}</span>
           <span class="draw__cell"><small>Category</small>${esc(p.category)}</span>
           ${p.strengths && p.strengths.length ? `<span class="draw__cell draw__cell--wide"><small>Stands out for</small>${strengthsHTML(p)}</span>` : ""}
@@ -290,27 +300,10 @@
     showReveals(spotlight);
   }
 
-  /* ---------- Student-led projects ---------- */
-  const ledHTML = (p) => {
-    const media = p.images && p.images.length
-      ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
-      : placeholder(p);
-    return `<li class="spot reveal">
-      <button class="spot__btn js-open" data-id="${esc(p.id)}">
-        <span class="spot__media">${media}<span class="best-tag led-tag">Student-led</span></span>
-        <span class="spot__body">
-          <span class="spot__meta">${esc(p.grade)} · ${esc(p.category)}</span>
-          <span class="spot__title">${esc(p.title)}</span>
-          <span class="spot__by">by ${esc(p.student)}</span>
-          <span class="spot__why">${esc(p.problem)}</span>
-        </span>
-      </button>
-    </li>`;
-  };
-
+  /* ---------- Student-led projects (same paper sheets, stamped "Student-led") ---------- */
   const ledList = $("#led-list");
   if (ledList) {
-    ledList.innerHTML = projects.filter((p) => p.studentLed).slice(0, 3).map(ledHTML).join("");
+    ledList.innerHTML = projects.filter((p) => p.studentLed).slice(0, 3).map((p, i, a) => drawHTML(p, i, a, true)).join("");
     showReveals(ledList);
   }
   $$(".js-led").forEach((a) => a.addEventListener("click", () => setMode("led")));
@@ -384,7 +377,7 @@
         <div>
           <p class="sheet__kicker">${esc(p.grade)} · ${esc(p.type)} · ${esc(p.category)}${p.studentLed ? " · Student-led" : ""}</p>
           <h2 class="sheet__title" id="sheet-title">${esc(p.title)}</h2>
-          <p class="sheet__by">by <strong>${esc(p.student)}</strong> · Class of ${esc(p.classOf)}</p>
+          <p class="sheet__by">by <strong class="student">${esc(p.student)}</strong> · Class of ${esc(p.classOf)}</p>
           <p class="sheet__problem">${esc(p.problem)}</p>
           ${links}
           ${(p.steps || []).length ? `<div class="sheet__steps">
