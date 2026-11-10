@@ -47,30 +47,66 @@
     rulerLeft.append(s);
   }
 
-  /* ---------- Side scale: the mat ruler, fixed on the left, scrolling with the page.
-     The pointer stays in the middle; sections with data-mark are written on the scale. ---------- */
-  const scale = document.createElement("div");
-  scale.className = "scale";
-  scale.setAttribute("aria-hidden", "true");
-  scale.innerHTML = `<div class="scale__clip"><div class="scale__track"></div></div><span class="scale__pointer"></span>`;
-  document.body.append(scale);
-  document.documentElement.classList.add("has-scale");
-  const track = $(".scale__track", scale);
+  /* ---------- Roller: a ruler-style scrollbar on the right.
+     The green fill shows how far you've come. The handle is a scale needle on a hub:
+     it slides down the ruler and spins fast as you scroll.
+     Drag it (or click the ruler) to move the page. ---------- */
+  const roller = document.createElement("div");
+  roller.className = "roller";
+  roller.setAttribute("aria-hidden", "true");
+  roller.innerHTML = `<span class="roller__channel"><span class="roller__fill"></span></span>
+    <svg class="roller__knob" viewBox="0 0 100 100">
+      <g class="roller__needle"><g transform="rotate(-90 50 50)">
+        <path d="M47.6 50 L49.2 6 H50.8 L52.4 50 Z"/>
+        <path d="M47 50 H53 V66 H47 Z"/>
+        <circle cx="50" cy="70" r="7"/>
+      </g></g>
+      <circle class="roller__hub" cx="50" cy="50" r="11"/>
+      <circle class="roller__pivot" cx="50" cy="50" r="3.5"/>
+    </svg>`;
+  document.body.append(roller);
+  document.documentElement.classList.add("has-roller");
+  const KNOB = 24;
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const needle = $(".roller__needle", roller);
 
-  const buildScale = () => {
-    const h = document.documentElement.scrollHeight;
-    let html = "";
-    for (let y = 148, n = 1; y < h; y += 120, n++) html += `<span class="scale__num" style="top:${y}px">${n * 5}</span>`;
-    $$("[data-mark]").forEach((el) => {
-      const top = Math.round(el.getBoundingClientRect().top + window.scrollY);
-      html += `<span class="scale__mark" style="top:${top}px">${esc(el.dataset.mark)}</span>`;
-    });
-    track.style.height = h + "px";
-    track.innerHTML = html;
+  // The needle rests horizontal, pointing at the page. It spins while you scroll,
+  // then springs back to horizontal (the nearest full turn) once you stop.
+  let settle = 0;
+  const moveRoller = () => {
+    const p = maxScroll() > 0 ? Math.min(1, window.scrollY / maxScroll()) : 0;
+    roller.style.setProperty("--y", `${KNOB / 2 + p * (window.innerHeight - KNOB)}px`);
+    const turn = (window.scrollY / 120) * 360; // fast: one full turn every 120px
+    needle.style.transition = "transform 0.12s linear";
+    needle.style.transform = `rotate(${turn}deg)`;
+    clearTimeout(settle);
+    settle = setTimeout(() => {
+      needle.style.transition = "";
+      needle.style.transform = `rotate(${Math.round(turn / 360) * 360}deg)`;
+    }, 180);
   };
-  const moveScale = () => { track.style.transform = `translateY(${-window.scrollY}px)`; };
-  window.addEventListener("scroll", moveScale, { passive: true });
-  new ResizeObserver(() => { buildScale(); moveScale(); }).observe(document.body);
+  window.addEventListener("scroll", moveRoller, { passive: true });
+  window.addEventListener("resize", moveRoller);
+  new ResizeObserver(moveRoller).observe(document.body);
+
+  let rolling = false;
+  const rollTo = (clientY) => {
+    const p = Math.min(1, Math.max(0, (clientY - KNOB / 2) / (window.innerHeight - KNOB)));
+    if (lenis) lenis.scrollTo(p * maxScroll(), { immediate: true });
+    else window.scrollTo(0, p * maxScroll());
+    moveRoller();
+  };
+  roller.addEventListener("pointerdown", (e) => {
+    rolling = true;
+    roller.setPointerCapture(e.pointerId);
+    roller.classList.add("is-rolling");
+    rollTo(e.clientY);
+    e.preventDefault();
+  });
+  roller.addEventListener("pointermove", (e) => { if (rolling) rollTo(e.clientY); });
+  const stopRoll = () => { rolling = false; roller.classList.remove("is-rolling"); };
+  roller.addEventListener("pointerup", stopRoll);
+  roller.addEventListener("pointercancel", stopRoll);
 
   /* ---------- Hero letters stretch toward the cursor ---------- */
   const letters = $$(".l");
@@ -222,19 +258,24 @@
   const strengthsHTML = (p) =>
     `<span class="strengths">${(p.strengths || []).map((s) => `<span>${esc(s)}</span>`).join("")}</span>`;
 
-  const spotHTML = (p) => {
+  // Each best project is drawn as a blueprint sheet: framed picture, stamp, teacher's note, title block.
+  const drawHTML = (p, i, all) => {
     const media = p.images && p.images.length
       ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
       : placeholder(p);
-    return `<li class="spot reveal">
-      <button class="spot__btn js-open" data-id="${esc(p.id)}">
-        <span class="spot__media">${media}<span class="best-tag">★ Best project</span></span>
-        <span class="spot__body">
-          <span class="spot__meta">${esc(p.grade)} · ${esc(p.category)}</span>
-          <span class="spot__title">${esc(p.title)}</span>
-          <span class="spot__by">by ${esc(p.student)}</span>
-          ${p.why ? `<span class="spot__why">${esc(p.why)}</span>` : ""}
-          ${strengthsHTML(p)}
+    const no = (n) => String(n).padStart(2, "0");
+    return `<li class="draw reveal">
+      <button class="draw__btn js-open" data-id="${esc(p.id)}">
+        <span class="draw__frame">${media}<span class="draw__stamp">★ Best project</span></span>
+        <span class="draw__dim" aria-hidden="true"><span>${esc(p.type || p.category)}</span></span>
+        ${p.why ? `<span class="draw__note">${esc(p.why)}</span>` : ""}
+        <span class="draw__block">
+          <span class="draw__cell draw__cell--title"><small>Project</small>${esc(p.title)}</span>
+          <span class="draw__cell"><small>Sheet</small>${no(i + 1)} / ${no(all.length)}</span>
+          <span class="draw__cell"><small>Designed by</small>${esc(p.student)}</span>
+          <span class="draw__cell"><small>Grade</small>${esc(p.grade)}</span>
+          <span class="draw__cell"><small>Category</small>${esc(p.category)}</span>
+          ${p.strengths && p.strengths.length ? `<span class="draw__cell draw__cell--wide"><small>Stands out for</small>${strengthsHTML(p)}</span>` : ""}
         </span>
       </button>
     </li>`;
@@ -245,7 +286,7 @@
   // Home page: first 3 best projects
   const spotlight = $("#spotlight");
   if (spotlight) {
-    spotlight.innerHTML = bestProjects.slice(0, 3).map(spotHTML).join("");
+    spotlight.innerHTML = bestProjects.slice(0, 3).map(drawHTML).join("");
     showReveals(spotlight);
   }
 
@@ -295,7 +336,7 @@
         (data.criteria || [])
           .map((c) => `<button class="chip" data-value="${esc(c.name)}" aria-pressed="${strength === c.name}"${count(c.name) === 0 ? " disabled" : ""}>${esc(c.name)}<sup>${count(c.name)}</sup></button>`)
           .join("");
-      bestGrid.innerHTML = list.map(spotHTML).join("");
+      bestGrid.innerHTML = list.map(drawHTML).join("");
       $("#best-count").textContent = `${list.length} project${list.length === 1 ? "" : "s"}`;
       $$(".reveal", bestGrid).forEach((el) => el.classList.add("in"));
     };
@@ -405,6 +446,21 @@
     renderGrid();
   }
   if (location.hash.startsWith("#project/")) openProject(decodeURIComponent(location.hash.slice(9)));
-  buildScale();
-  moveScale();
+
+  /* ---------- Visitor counter (free counter service: abacus.jasoncameron.dev) ----------
+     Each visit counts once, however many pages are opened. Stays hidden if the service can't be reached. */
+  const visits = $("#visits");
+  if (visits) {
+    const key = location.hostname.endsWith("github.io") ? "visits" : "visits-test";
+    let counted = false;
+    try { counted = sessionStorage.getItem("bricolage-counted") === "1"; } catch {}
+    fetch(`https://abacus.jasoncameron.dev/${counted ? "get" : "hit"}/bricolage-sis-design/${key}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then(({ value }) => {
+        try { sessionStorage.setItem("bricolage-counted", "1"); } catch {}
+        $("#visits-n", visits).innerHTML = String(value).padStart(5, "0").split("").map((d) => `<span>${d}</span>`).join("");
+        visits.hidden = false;
+      })
+      .catch(() => {});
+  }
 })();

@@ -174,72 +174,71 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .mat__ruler span { position: absolute; }
 
-/* Side scale: the mat's left ruler, fixed to the screen and scrolling with the page.
-   The yellow pointer stays in the middle; section names are marked in yellow. */
-.scale {
+/* Roller: ruler-style scrollbar on the right. Ticks on both sides of a paper channel;
+   the green fill grows as you scroll, the needle handle spins and can be dragged. */
+.roller {
+  --tick: var(--ink-soft);
   position: fixed;
-  top: 0; bottom: 0; left: 0;
+  top: 0; right: 0; bottom: 0;
   z-index: 40;
-  width: 28px;
+  width: 40px;
+  background:
+    linear-gradient(var(--tick) 2px, transparent 2px) 0 0 / 12px 24px repeat-y,
+    linear-gradient(var(--tick) 2px, transparent 2px) 6px 12px / 6px 24px repeat-y,
+    linear-gradient(var(--tick) 2px, transparent 2px) 28px 6px / 6px 24px repeat-y,
+    linear-gradient(var(--tick) 2px, transparent 2px) 28px 18px / 12px 24px repeat-y,
+    var(--paper-2);
+  border-left: 1.5px solid var(--ink);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.roller.is-rolling { cursor: grabbing; }
+.roller__channel {
+  position: absolute;
+  top: 0; bottom: 0; left: 13px;
+  width: 14px;
+  background: var(--paper);
+  border-left: 1px solid rgba(21, 23, 28, 0.2);
+  border-right: 1px solid rgba(21, 23, 28, 0.2);
+  overflow: hidden;
+}
+.roller__fill {
+  display: block;
+  height: var(--y, 8px);
+  border-radius: 7px 7px 0 0;
   background: var(--mat);
-  pointer-events: none;
-  font-family: var(--f-mono);
-  font-size: 10px;
 }
-.scale__clip { position: absolute; inset: 0; overflow: hidden; }
-.scale__track {
+/* the handle: a scale needle on an orange hub, centred on the channel */
+.roller__knob {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  background-image:
-    linear-gradient(rgba(201, 228, 211, 0.55) 1px, transparent 1px),
-    linear-gradient(rgba(201, 228, 211, 0.55) 1px, transparent 1px);
-  background-size: 14px 120px, 7px 24px;
-  background-repeat: repeat-y;
-  background-position: right 28px, right 28px;
-  will-change: transform;
+  top: var(--y, 12px);
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+  transform: translate(-50%, -50%);
+  transition: scale 0.2s var(--ease-out);
+  /* a pale edge keeps the black needle visible over the green fill */
+  filter: drop-shadow(0 0 0.7px var(--paper)) drop-shadow(0 0 0.7px var(--paper)) drop-shadow(0 1px 1.5px rgba(21, 23, 28, 0.35));
 }
-.scale__num {
-  position: absolute;
-  left: 3px;
-  transform: translateY(3px);
-  color: rgba(201, 228, 211, 0.6);
+.roller__needle {
+  fill: var(--ink);
+  transform-origin: 50px 50px;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.scale__mark {
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  padding: 8px 0;
-  border-top: 2px solid var(--marker);
-  background: var(--mat);
-  writing-mode: vertical-rl;
-  line-height: 26px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--marker);
+.roller__hub { fill: #E0962F; stroke: var(--ink); stroke-width: 2; }
+.roller__pivot { fill: var(--ink); }
+.roller:hover .roller__knob,
+.roller.is-rolling .roller__knob { scale: 1.12; }
+/* it takes the browser scrollbar's place; phones keep their own (they hide it anyway) */
+@media (min-width: 761px) {
+  html.has-roller { scrollbar-width: none; }
+  html.has-roller::-webkit-scrollbar { display: none; }
+  html.has-roller body { padding-right: 40px; }
 }
-.scale__pointer {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 2px;
-  margin-top: -1px;
-  background: var(--marker);
-}
-.scale__pointer::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  right: -11px;
-  border: 6px solid transparent;
-  border-left: 8px solid var(--marker);
-}
-/* the scale replaces the hero's own left ruler, and the browser's scrollbar */
-.has-scale .mat__ruler--left { display: none; }
-html.has-scale { scrollbar-width: none; }
-html.has-scale::-webkit-scrollbar { display: none; }
+@media (max-width: 760px) { .roller { display: none; } }
+
 .mat__ruler--top span { top: 2px; transform: translateX(4px); }
 .mat__ruler--left span { left: 3px; transform: translateY(3px); }
 
@@ -992,6 +991,33 @@ html.has-scale::-webkit-scrollbar { display: none; }
   text-transform: uppercase;
   color: var(--pencil);
 }
+/* visitor counter: a little mechanical tally */
+.site-footer__visits {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 0 0;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pencil);
+}
+.site-footer__visits[hidden] { display: none; }
+.site-footer__digits { display: inline-flex; gap: 3px; }
+.site-footer__digits span {
+  display: grid;
+  place-items: center;
+  width: 1.4em;
+  height: 1.9em;
+  border-radius: 2px;
+  background: linear-gradient(var(--paper) 50%, var(--paper-2) 50%);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
 
 /* ---------- Project sheet ---------- */
 .sheet {
@@ -1119,12 +1145,26 @@ html.has-scale::-webkit-scrollbar { display: none; }
   text-transform: uppercase;
 }
 
+/* Best projects: a blueprint table, each pick drawn up as a technical sheet */
 .spotlight,
 .best {
+  --bp: #1C4C96;
+  --bp-ink: #DCE7FA;
+  --bp-sheet: #163F7E;
+  --bp-line: rgba(220, 231, 250, 0.1);
+  --bp-line-strong: rgba(220, 231, 250, 0.2);
   padding: clamp(72px, 9vw, 120px) var(--gutter);
-  background: var(--ink);
-  color: var(--paper);
+  background-color: var(--bp);
+  background-image:
+    linear-gradient(var(--bp-line-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bp-line-strong) 1px, transparent 1px),
+    linear-gradient(var(--bp-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bp-line) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: #fff;
 }
+.spotlight .spotlight__intro,
+.best .gallery__count { color: var(--bp-ink); }
 .spotlight__head {
   display: flex;
   justify-content: space-between;
@@ -1206,16 +1246,152 @@ html.has-scale::-webkit-scrollbar { display: none; }
   .spot__btn:hover .ph__word { transform: scale(1.05); }
 }
 
-/* Home page: one large pick + two side by side */
+.draw { display: flex; }
+.draw__btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  background: var(--bp-sheet);
+  border: 1.5px solid var(--bp-ink);
+  color: inherit;
+  text-align: left;
+  transition: border-color 0.3s, transform 0.4s var(--ease-out);
+}
+/* the inner border line of a drawing sheet */
+.draw__btn::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(220, 231, 250, 0.35);
+  pointer-events: none;
+}
+.draw__frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--bp-ink);
+  overflow: hidden;
+}
+.draw__frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.7s var(--ease-out);
+}
+/* rubber stamp, pressed on as the sheet comes into view */
+.draw__stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  padding: 6px 10px 5px;
+  border: 2.5px solid var(--marker);
+  outline: 1px solid var(--marker);
+  outline-offset: 2px;
+  background: rgba(28, 76, 150, 0.85);
+  color: var(--marker);
+  font-family: var(--f-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  rotate: -7deg;
+  opacity: 0;
+  scale: 1.8;
+}
+.draw.in .draw__stamp { animation: stamp 0.45s cubic-bezier(0.5, 0, 0.75, 0) 0.5s forwards; }
+@keyframes stamp { to { opacity: 1; scale: 1; } }
+/* dimension line under the picture */
+.draw__dim {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 14px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bp-ink);
+}
+.draw__dim::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 8px;
+  margin-top: -4px;
+  border-left: 1px solid var(--bp-ink);
+  border-right: 1px solid var(--bp-ink);
+  background: linear-gradient(var(--bp-ink), var(--bp-ink)) center / 100% 1px no-repeat;
+}
+.draw__dim span { position: relative; padding: 0 10px; background: var(--bp-sheet); }
+/* the teacher's note, in handwriting */
+.draw__note {
+  display: block;
+  margin: 0 4px 16px;
+  font-family: var(--f-hand);
+  font-size: clamp(24px, 2.2vw, 30px);
+  line-height: 1;
+  color: var(--marker);
+  rotate: -1deg;
+}
+.draw__note::before { content: "↳ "; }
+/* title block, like the corner of an engineering drawing */
+.draw__block {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: auto;
+  border-top: 1px solid var(--bp-ink);
+  border-left: 1px solid var(--bp-ink);
+}
+.draw__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 7px 10px 8px;
+  border-right: 1px solid var(--bp-ink);
+  border-bottom: 1px solid var(--bp-ink);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.draw__cell small {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bp-ink);
+  opacity: 0.75;
+}
+.draw__cell--title {
+  grid-column: span 2;
+  font-family: var(--f-display);
+  font-variation-settings: "wdth" 85, "wght" 750;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.05;
+}
+.draw__cell--wide { grid-column: 1 / -1; }
+.draw__cell .strengths { margin-top: 4px; }
+.draw__cell .strengths span { border-color: var(--bp-ink); color: #fff; }
+@media (hover: hover) {
+  .draw__btn:hover { border-color: var(--marker); transform: translateY(-4px); }
+  .draw__btn:hover .draw__frame img,
+  .draw__btn:hover .ph__word { transform: scale(1.04); }
+}
+
+/* sheets lie slightly askew on the table, and straighten when you point at one */
+.draw:nth-child(3n + 1) .draw__btn { rotate: -0.6deg; }
+.draw:nth-child(3n + 2) .draw__btn { rotate: 0.5deg; }
+.draw:nth-child(3n) .draw__btn { rotate: -0.3deg; }
+@media (hover: hover) { .draw .draw__btn:hover { rotate: 0deg; } }
 @media (min-width: 900px) {
-  .spotlight__list:not(.spotlight__list--all) { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
-  .spotlight__list:not(.spotlight__list--all) .spot:first-child { grid-row: span 2; }
-  .spotlight__list:not(.spotlight__list--all) .spot:first-child .spot__title { font-size: clamp(32px, 3.4vw, 52px); }
-  .spotlight__list:not(.spotlight__list--all) .spot:not(:first-child) .spot__btn {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-  }
-  .spotlight__list:not(.spotlight__list--all) .spot:not(:first-child) .spot__media { aspect-ratio: auto; min-height: 100%; }
+  .spotlight__list:not(.spotlight__list--all) { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: clamp(24px, 3vw, 44px); }
 }
 
 .btn-more {
@@ -1340,10 +1516,6 @@ html.has-scale::-webkit-scrollbar { display: none; }
   .sticker--myp, .sticker--dp { right: -0.1em; }
   .hero__lets { left: 0; top: -0.6em; }
   .hero__def { margin-bottom: 48px; }
-  .scale { width: 16px; }
-  .scale__num { display: none; }
-  .scale__mark { line-height: 14px; }
-  .has-scale .mat__ruler--top { left: 16px; }
   .explore__row { grid-template-columns: 1fr; grid-template-areas: "q" "meta"; }
   .explore__arrow { display: none; }
   .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; border-top: 0; }
