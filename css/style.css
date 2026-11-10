@@ -80,18 +80,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .logo {
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 5px 12px;
   background: #fff;
   border: 1.5px solid var(--ink);
 }
-.logo img { height: 28px; width: auto; }
+.logo img { height: 44px; width: auto; }
 .dept {
   display: inline-block;
   font-family: var(--f-mono);
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 1.3;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 9px 14px;
+  padding: 16px 22px;
   background: var(--paper);
   color: var(--ink);
   border: 1.5px solid var(--ink);
@@ -100,25 +101,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .dept { transition: background 0.2s, color 0.2s; }
 .dept:hover { background: var(--ink); color: var(--paper); }
 
-/* Site name, joined to the logo box like a label */
-.site-header__left { display: flex; align-items: stretch; }
-.brand {
-  display: inline-flex;
+/* Design Team: each team member's name rolls up into the block,
+   then it lands on "Design Team" with a yellow flash. */
+.dept--team { animation: team-land 0.6s ease-out 3.6s; }
+.dept__window { display: block; height: 1.3em; overflow: hidden; }
+.dept__reel {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-left: -1.5px;
-  padding: 0 16px;
-  background: var(--ink);
-  color: var(--paper);
-  border: 1.5px solid var(--ink);
-  font-family: var(--f-display);
-  font-variation-settings: "wdth" 120, "wght" 800;
-  font-size: 19px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.2s;
+  animation: team-roll 3.4s var(--ease-out) 0.5s both;
 }
-.brand:hover { color: var(--marker); }
+.dept__reel > span { height: 1.3em; white-space: nowrap; }
+@keyframes team-roll {
+  0%       { transform: translateY(16.667%); }   /* empty: the first name waits below */
+  8%, 16%  { transform: translateY(0); }         /* Dev */
+  24%, 32% { transform: translateY(-16.667%); }  /* Ishitha */
+  40%, 48% { transform: translateY(-33.333%); }  /* Chaitra */
+  56%, 64% { transform: translateY(-50%); }      /* Sushma */
+  72%, 80% { transform: translateY(-66.667%); }  /* Suhail */
+  92%, 100% { transform: translateY(-83.333%); } /* Design Team */
+}
+@keyframes team-land { from { background: var(--marker); } }
 
 /* ---------- Hero: cutting mat ---------- */
 .mat {
@@ -170,6 +173,71 @@ button { font: inherit; color: inherit; cursor: pointer; }
   opacity: 0.55;
 }
 .mat__ruler span { position: absolute; }
+
+/* Side scale: the mat's left ruler, fixed to the screen and scrolling with the page.
+   The yellow pointer stays in the middle; section names are marked in yellow. */
+.scale {
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  z-index: 40;
+  width: 28px;
+  background: var(--mat);
+  pointer-events: none;
+  font-family: var(--f-mono);
+  font-size: 10px;
+}
+.scale__clip { position: absolute; inset: 0; overflow: hidden; }
+.scale__track {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background-image:
+    linear-gradient(rgba(201, 228, 211, 0.55) 1px, transparent 1px),
+    linear-gradient(rgba(201, 228, 211, 0.55) 1px, transparent 1px);
+  background-size: 14px 120px, 7px 24px;
+  background-repeat: repeat-y;
+  background-position: right 28px, right 28px;
+  will-change: transform;
+}
+.scale__num {
+  position: absolute;
+  left: 3px;
+  transform: translateY(3px);
+  color: rgba(201, 228, 211, 0.6);
+}
+.scale__mark {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  padding: 8px 0;
+  border-top: 2px solid var(--marker);
+  background: var(--mat);
+  writing-mode: vertical-rl;
+  line-height: 26px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--marker);
+}
+.scale__pointer {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--marker);
+}
+.scale__pointer::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: -11px;
+  border: 6px solid transparent;
+  border-left: 8px solid var(--marker);
+}
+/* the scale replaces the hero's own left ruler */
+.has-scale .mat__ruler--left { display: none; }
 .mat__ruler--top span { top: 2px; transform: translateX(4px); }
 .mat__ruler--left span { left: 3px; transform: translateY(3px); }
 
@@ -1262,14 +1330,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
   .site-header { padding-top: 10px; }
-  .dept { font-size: 11px; padding: 7px 10px; }
-  .logo { padding: 0 6px; }
-  .brand { font-size: 14px; padding: 0 10px; }
+  .dept { font-size: 12px; padding: 11px 12px; }
+  .logo { padding: 3px 8px; }
+  .logo img { height: 32px; }
   .mat { padding-top: 100px; }
   .hero__word { font-size: 23vw; }
   .sticker--myp, .sticker--dp { right: -0.1em; }
   .hero__lets { left: 0; top: -0.6em; }
   .hero__def { margin-bottom: 48px; }
+  .scale { width: 16px; }
+  .scale__num { display: none; }
+  .scale__mark { line-height: 14px; }
+  .has-scale .mat__ruler--top { left: 16px; }
   .explore__row { grid-template-columns: 1fr; grid-template-areas: "q" "meta"; }
   .explore__arrow { display: none; }
   .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; border-top: 0; }

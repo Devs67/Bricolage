@@ -17,13 +17,12 @@
 
   <!-- ===== Header ===== -->
   <header class="site-header">
-    <div class="site-header__left">
-      <a class="logo" href="#top" aria-label="Back to top">
-        <img src="assets/school-logo.png" alt="Sreenidhi International School" width="480" height="152">
-      </a>
-      <a class="brand" href="#top">Bricolage</a>
-    </div>
-    <a class="dept" href="#projects">Design Dept</a>
+    <a class="logo" href="#top" aria-label="Back to top">
+      <img src="assets/school-logo.png" alt="Sreenidhi International School" width="480" height="152">
+    </a>
+    <a class="dept dept--team" href="#projects" aria-label="Design Team">
+      <span class="dept__window" aria-hidden="true"><span class="dept__reel"><span>Dev</span><span>Ishitha</span><span>Chaitra</span><span>Sushma</span><span>Suhail</span><span>Design Team</span></span></span>
+    </a>
   </header>
 
   <main>
@@ -74,7 +73,7 @@
     </section>
 
     <!-- ===== What will you find here ===== -->
-    <section class="about" aria-labelledby="about-title">
+    <section class="about" aria-labelledby="about-title" data-mark="Intro">
       <h2 class="section-label" id="about-title">What will you find here?</h2>
       <p class="about__lead reveal">
         Students across MYP and DP go through a <mark>rigorous design cycle</mark> — <mark>4 criteria</mark> and <mark>16 stages</mark>.
@@ -95,7 +94,7 @@
     </section>
 
     <!-- ===== Explore ===== -->
-    <section class="explore" aria-labelledby="explore-title">
+    <section class="explore" aria-labelledby="explore-title" data-mark="Explore">
       <h2 class="section-label" id="explore-title">Find your way in</h2>
       <ul class="explore__list">
         <li>
@@ -123,7 +122,7 @@
     </section>
 
     <!-- ===== Best projects ===== -->
-    <section class="spotlight" aria-labelledby="spotlight-title">
+    <section class="spotlight" aria-labelledby="spotlight-title" data-mark="Best">
       <div class="spotlight__head">
         <h2 class="spotlight__title" id="spotlight-title">Best projects</h2>
         <p class="spotlight__intro">Chosen by our design team for problem solving, real-world impact, technology used, creativity, user focus and sustainability.</p>
@@ -133,7 +132,7 @@
     </section>
 
     <!-- ===== Student-led projects ===== -->
-    <section class="led" aria-labelledby="led-title">
+    <section class="led" aria-labelledby="led-title" data-mark="Student-led">
       <div class="spotlight__head">
         <div>
           <h2 class="spotlight__title" id="led-title">Student-led</h2>
@@ -146,7 +145,7 @@
     </section>
 
     <!-- ===== Gallery ===== -->
-    <section class="gallery" id="projects" aria-labelledby="gallery-title">
+    <section class="gallery" id="projects" aria-labelledby="gallery-title" data-mark="The work">
       <div class="gallery__head">
         <h2 class="gallery__title" id="gallery-title">The work</h2>
         <p class="gallery__count" id="count" aria-live="polite"></p>
@@ -167,7 +166,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" data-mark="End">
     <p class="site-footer__big">Want your work here?</p>
     <p class="site-footer__small">Talk to your design facilitator about submitting your project.</p>
     <p class="site-footer__def"><b>bricolage</b> <i>(n.)</i> — creating something new from whatever is at hand.</p>

@@ -47,6 +47,31 @@
     rulerLeft.append(s);
   }
 
+  /* ---------- Side scale: the mat ruler, fixed on the left, scrolling with the page.
+     The pointer stays in the middle; sections with data-mark are written on the scale. ---------- */
+  const scale = document.createElement("div");
+  scale.className = "scale";
+  scale.setAttribute("aria-hidden", "true");
+  scale.innerHTML = `<div class="scale__clip"><div class="scale__track"></div></div><span class="scale__pointer"></span>`;
+  document.body.append(scale);
+  document.documentElement.classList.add("has-scale");
+  const track = $(".scale__track", scale);
+
+  const buildScale = () => {
+    const h = document.documentElement.scrollHeight;
+    let html = "";
+    for (let y = 148, n = 1; y < h; y += 120, n++) html += `<span class="scale__num" style="top:${y}px">${n * 5}</span>`;
+    $$("[data-mark]").forEach((el) => {
+      const top = Math.round(el.getBoundingClientRect().top + window.scrollY);
+      html += `<span class="scale__mark" style="top:${top}px">${esc(el.dataset.mark)}</span>`;
+    });
+    track.style.height = h + "px";
+    track.innerHTML = html;
+  };
+  const moveScale = () => { track.style.transform = `translateY(${-window.scrollY}px)`; };
+  window.addEventListener("scroll", moveScale, { passive: true });
+  new ResizeObserver(() => { buildScale(); moveScale(); }).observe(document.body);
+
   /* ---------- Hero letters stretch toward the cursor ---------- */
   const letters = $$(".l");
   const mat = $(".mat");
@@ -380,4 +405,6 @@
     renderGrid();
   }
   if (location.hash.startsWith("#project/")) openProject(decodeURIComponent(location.hash.slice(9)));
+  buildScale();
+  moveScale();
 })();
