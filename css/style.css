@@ -77,9 +77,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .site-header > * { pointer-events: auto; }
 
-.logo { text-decoration: none; color: inherit; }
-.logo img { height: 40px; width: auto; }
-.logo__placeholder,
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: #fff;
+  border: 1.5px solid var(--ink);
+}
+.logo img { height: 28px; width: auto; }
 .dept {
   display: inline-block;
   font-family: var(--f-mono);
@@ -1117,7 +1122,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
   .site-header { padding-top: 10px; }
-  .logo__placeholder, .dept { font-size: 11px; padding: 7px 10px; }
+  .dept { font-size: 11px; padding: 7px 10px; }
+  .logo { padding: 0 6px; }
   .brand { font-size: 14px; padding: 0 10px; }
   .mat { padding-top: 100px; }
   .hero__word { font-size: 23vw; }

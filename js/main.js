@@ -1,4 +1,5 @@
-(() => {
+(async () => {
+  await window.SHOWCASE_READY;
   const data = window.SHOWCASE || { projects: [], facilitators: [] };
   const projects = [...data.projects].sort((a, b) => (b.best ? 1 : 0) - (a.best ? 1 : 0));
   const bestProjects = projects.filter((p) => p.best);
@@ -128,7 +129,7 @@
         html += cats.map((c) => chip(c, `cat:${c}`, countBy("category", c))).join("");
       });
     } else {
-      const names = data.facilitators.length ? data.facilitators : [...new Set(projects.map((p) => p.facilitator))];
+      const names = data.facilitators.length ? data.facilitators : [...new Set(projects.map((p) => p.facilitator).filter(Boolean))];
       html += names.map((n) => chip(n, n, countBy("facilitator", n))).join("");
     }
     chipsEl.innerHTML = html;

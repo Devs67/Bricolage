@@ -2,9 +2,14 @@
   ============================================================
   DESIGN PROJECTS — CONTENT FILE
   ============================================================
-  This is the ONLY file you need to edit to add or change projects.
+  Projects now come from the Google Sheet "Bricolage — Projects"
+  (link below in `sheetCSV`). Add or change projects THERE — one row each,
+  Show = "Yes" to put it on the site. No code or pushing needed.
 
-  To add a project:
+  The projects list in this file is only a BACKUP, shown if the sheet
+  can't be reached. The notes below still describe what each column means.
+
+  To add a project here instead (old way):
     1. Copy one { ... } block below (including the comma after it).
     2. Paste it at the top of the `projects` list.
     3. Change the values. Keep the quotes.
@@ -48,6 +53,10 @@
 */
 
 window.SHOWCASE = {
+  // The Google Sheet the site reads. The sheet must be shared as
+  // "Anyone with the link — Viewer" for this to work.
+  sheetCSV: "https://docs.google.com/spreadsheets/d/1nfndCiDsoo7IYA96H_1E5rf7iFPwzxvn5BN9xu2u8PI/gviz/tq?tqx=out:csv&sheet=Projects",
+
   facilitators: ["Ms. Iyer", "Mr. Fernandes", "Ms. Okafor"],
 
   // How best projects are judged. Shown on the Best Projects page.
