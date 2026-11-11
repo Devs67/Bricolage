@@ -65,6 +65,7 @@ window.SHOWCASE_READY = (async () => {
           title,
           student: col(r, "student name"),
           grade,
+          section: col(r, "section"),
           year,
           classOf: start && g >= 0 ? start + 1 + (GRADES.length - 1 - g) : "",
           type: col(r, "type"),

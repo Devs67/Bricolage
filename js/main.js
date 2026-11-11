@@ -224,6 +224,9 @@
     `<span class="ph__word">${esc(p.category)}</span>` +
     `<span class="ph__label">Photo coming soon</span></span>`;
 
+  // Grade plus the student's section, e.g. "MYP 2A"
+  const gradeOf = (p) => esc(p.grade) + esc(p.section || "");
+
   const cardHTML = (p) => {
     const media = p.images && p.images.length
       ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
@@ -234,13 +237,13 @@
           <span class="card__note" aria-hidden="true">open it →</span>
         </span>
         <span class="card__badges">
-          <span class="card__badge">${esc(p.grade)}</span>
+          <span class="card__badge">${esc(p.category)}</span>
           ${p.studentLed ? `<span class="card__badge card__badge--led">Student-led</span>` : ""}
         </span>
         ${p.best ? `<span class="best-tag">★ Best project</span>` : ""}
         <span class="card__sticky">
           <span class="card__title">${esc(p.title)}</span>
-          <span class="card__meta"><b class="card__student student">${esc(p.student)}</b> · ${esc(p.category)}</span>
+          <span class="card__meta"><b class="card__student student">${esc(p.student)}</b> · ${gradeOf(p)}</span>
         </span>
       </button>
     </li>`;
@@ -290,7 +293,7 @@
     const note = led ? p.problem : p.why;
     return `<li class="draw reveal">
       <button class="draw__btn js-open" data-id="${esc(p.id)}">
-        <span class="draw__tape draw__tape--grade">${esc(p.grade)}</span>
+        <span class="draw__tape draw__tape--grade">${gradeOf(p)}</span>
         <span class="draw__tape draw__tape--tag">${led ? "Student-led" : "★ Best project"}</span>
         <span class="draw__frame">${media}</span>
         <span class="draw__dim" aria-hidden="true"><span>${esc(p.type || p.category)}</span></span>
@@ -299,7 +302,7 @@
           <span class="draw__cell draw__cell--title"><small>Project</small>${esc(p.title)}</span>
           <span class="draw__cell"><small>Sheet</small>${no(i + 1)} / ${no(all.length)}</span>
           <span class="draw__cell"><small>Designed by</small><b class="student">${esc(p.student)}</b></span>
-          <span class="draw__cell"><small>Grade</small>${esc(p.grade)}</span>
+          <span class="draw__cell"><small>Grade</small>${gradeOf(p)}</span>
           <span class="draw__cell"><small>Category</small>${esc(p.category)}</span>
           ${p.strengths && p.strengths.length ? `<span class="draw__cell draw__cell--wide"><small>Stands out for</small>${strengthsHTML(p)}</span>` : ""}
         </span>
@@ -391,9 +394,9 @@
       <div class="sheet__media">${media}</div>${thumbs}
       <div class="sheet__grid">
         <div>
-          <p class="sheet__kicker">${esc(p.grade)} · ${esc(p.type)} · ${esc(p.category)}${p.studentLed ? " · Student-led" : ""}</p>
+          <p class="sheet__kicker">${gradeOf(p)} ·${esc(p.type)} · ${esc(p.category)}${p.studentLed ? " · Student-led" : ""}</p>
           <h2 class="sheet__title" id="sheet-title">${esc(p.title)}</h2>
-          <p class="sheet__by">by <strong class="student">${esc(p.student)}</strong> · Class of ${esc(p.classOf)}</p>
+          <p class="sheet__by">by <strong class="student">${esc(p.student)}</strong>${p.classOf ? ` · Class of ${esc(p.classOf)}` : ""}</p>
           <p class="sheet__problem">${esc(p.problem)}</p>
           ${links}
           ${(p.steps || []).length ? `<div class="sheet__steps">
@@ -411,7 +414,7 @@
             <div><dt>Designed for</dt><dd>${esc(p.designedFor)}</dd></div>
             <div><dt>Made with</dt><dd class="tools">${(p.tools || []).map((t) => `<span>${esc(t)}</span>`).join("")}</dd></div>
             ${p.facilitator ? `<div><dt>${p.studentLed ? "Mentor" : "Facilitator"}</dt><dd>${esc(p.facilitator)}</dd></div>` : ""}
-            <div><dt>Year</dt><dd>${esc(p.year)}</dd></div>
+            ${p.year ? `<div><dt>Year</dt><dd>${esc(p.year)}</dd></div>` : ""}
           </dl>
           ${p.unit ? `<details class="educators"><summary>For educators</summary><p><strong>Unit / brief:</strong> ${esc(p.unit)}</p></details>` : ""}
         </div>

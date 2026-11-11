@@ -20,6 +20,7 @@
     title       project name                       "Smart Plant Monitor"
     student     first name + initial               "Aanya S."
     grade       one of: "MYP 1" "MYP 2" "MYP 3" "MYP 4" "MYP 5" "DP 1" "DP 2"
+    section     the student's class section, e.g. "A" — optional
     year        academic year                      "2025–26"
     classOf     graduating year                    2030
     type        "Digital" or "Physical"
