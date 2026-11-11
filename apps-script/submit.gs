@@ -14,9 +14,13 @@
 
   If you change this file later: Deploy → Manage deployments → edit (pencil) →
   Version: "New version" → Deploy. The URL stays the same.
+
+  Once, for the daily Claude review: pick "setup" in the function menu at the top
+  and click Run. It prints a photo key in the log — give that key to Claude.
 */
 
 const SUBJECT = "Bricolage submission";
+const NEW_LABEL = "Bricolage/To review";
 
 // Form field → label in the email. Labels match the column names in the sheet.
 const FIELDS = [
@@ -61,10 +65,49 @@ function doPost(e) {
       attachments: photos,
       name: "Bricolage website",
     });
+    fileSubmissions();
     return reply({ ok: true });
   } catch (err) {
     return reply({ ok: false, error: String(err) });
   }
+}
+
+// Moves submission emails out of the inbox and under the "Bricolage/To review" label.
+// Gmail can take a moment to find a new email, so anything missed is caught next time
+// (and by the daily Claude review).
+function fileSubmissions() {
+  try {
+    Utilities.sleep(2000);
+    const label = GmailApp.getUserLabelByName(NEW_LABEL) || GmailApp.createLabel(NEW_LABEL);
+    GmailApp.search(`subject:"${SUBJECT}" in:inbox`, 0, 50).forEach((t) => {
+      t.addLabel(label);
+      t.moveToArchive();
+    });
+  } catch (err) {
+    console.warn(err); // never block a submission over this
+  }
+}
+
+// The daily Claude review fetches a submission's photos here, using the key from setup().
+// It only ever returns photos from "Bricolage submission" emails, or from emails
+// you have labelled "Bricolage/Approved" yourself (e.g. a student who emailed you directly).
+const APPROVED_LABEL = "Bricolage/Approved";
+
+function doGet(e) {
+  const p = e.parameter;
+  const key = PropertiesService.getScriptProperties().getProperty("PHOTO_KEY");
+  if (!key || p.key !== key) return reply({ ok: false, error: "Not allowed" });
+  const msg = GmailApp.getMessageById(p.id);
+  const approved = msg && msg.getThread().getLabels().some((l) => l.getName() === APPROVED_LABEL);
+  if (!msg || (msg.getSubject().indexOf(SUBJECT) !== 0 && !approved)) return reply({ ok: false, error: "Not a submission" });
+  return reply({ ok: true, photos: msg.getAttachments().map((a) => Utilities.base64Encode(a.getBytes())) });
+}
+
+// Run once by hand: makes the photo key and prints it in the log.
+function setup() {
+  const key = Utilities.getUuid();
+  PropertiesService.getScriptProperties().setProperty("PHOTO_KEY", key);
+  console.log("Photo key for Claude: " + key);
 }
 
 function reply(obj) {
