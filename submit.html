@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submit a Project — Bricolage</title>
+  <meta name="description" content="Send your design project to the Bricolage showcase.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&family=Reenie+Beanie&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip" href="#form">Skip to the form</a>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Home">
+      <img src="assets/school-logo.png" alt="Sreenidhi International School" width="480" height="152">
+    </a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="best.html">Best</a>
+      <a href="#form">The form</a>
+    </nav>
+    <a class="dept" href="index.html#projects">All projects</a>
+  </header>
+
+  <main>
+    <!-- ===== Banner ===== -->
+    <section class="mat mat--short" id="top" aria-labelledby="hero-title">
+      <div class="mat__ruler mat__ruler--top" aria-hidden="true"></div>
+      <div class="mat__ruler mat__ruler--left" aria-hidden="true"></div>
+
+      <div class="hero">
+        <a class="crumb" href="index.html">← Back to Design Projects</a>
+        <h1 class="hero__word hero__word--sm" id="hero-title" aria-label="Submit">
+          <span class="l" style="--i:0" data-l="S" aria-hidden="true">S</span><span class="l" style="--i:1" data-l="U" aria-hidden="true">U</span><span class="l" style="--i:2" data-l="B" aria-hidden="true">B</span><span class="l" style="--i:3" data-l="M" aria-hidden="true">M</span><span class="l" style="--i:4" data-l="I" aria-hidden="true">I</span><span class="l" style="--i:5" data-l="T" aria-hidden="true">T</span>
+        </h1>
+        <div class="dim" aria-hidden="true">
+          <span class="dim__line"></span>
+          <span class="dim__label">Your project · on the showcase</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== The form ===== -->
+    <section class="criteria" id="form" aria-labelledby="form-title" data-mark="Submit">
+      <h2 class="section-label" id="form-title">Send your project</h2>
+      <p class="criteria__lead">
+        Fill this in and the design team will check it. Once it's approved, it goes up on the site.
+      </p>
+
+      <form class="form" id="submit-form" novalidate>
+        <label class="field">
+          <span>Project name *</span>
+          <input name="project" required maxlength="120">
+        </label>
+        <label class="field">
+          <span>Student name *</span>
+          <input name="student" required maxlength="80" placeholder="First name + initial, e.g. Aanya S.">
+        </label>
+        <label class="field">
+          <span>Grade *</span>
+          <select name="grade" required>
+            <option value="">Choose…</option>
+            <option>MYP 1</option><option>MYP 2</option><option>MYP 3</option><option>MYP 4</option><option>MYP 5</option><option>DP 1</option><option>DP 2</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Section</span>
+          <input name="section" maxlength="2" placeholder="e.g. A">
+        </label>
+        <fieldset class="field">
+          <legend>Type *</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="type" value="Digital" required> Digital</label>
+            <label class="choice"><input type="radio" name="type" value="Physical"> Physical</label>
+          </div>
+        </fieldset>
+        <label class="field">
+          <span>Category *</span>
+          <input name="category" required maxlength="40" list="categories" placeholder="e.g. App, Product">
+          <datalist id="categories">
+            <option>App</option><option>Website</option><option>Game</option><option>Electronics</option><option>Product</option><option>Packaging</option>
+          </datalist>
+        </label>
+        <label class="field">
+          <span>Design facilitator</span>
+          <input name="teacher" maxlength="80">
+        </label>
+        <label class="field">
+          <span>Designed for</span>
+          <input name="designedFor" maxlength="120" placeholder="Who is it for?">
+        </label>
+        <label class="field field--wide">
+          <span>What problem does it solve? *</span>
+          <textarea name="description" required maxlength="600" rows="3"></textarea>
+        </label>
+        <label class="field field--wide">
+          <span>How it works</span>
+          <textarea name="steps" maxlength="1500" rows="5" placeholder="One step per line"></textarea>
+        </label>
+        <label class="field">
+          <span>Made with</span>
+          <input name="madeWith" maxlength="300" placeholder="Tools and materials, separated by commas">
+        </label>
+        <label class="field">
+          <span>Link to the app, website or video</span>
+          <input name="link" type="url" maxlength="300" placeholder="https://…">
+        </label>
+        <label class="field">
+          <span>Unit (for teachers)</span>
+          <input name="unit" maxlength="120">
+        </label>
+        <label class="field field--check">
+          <input type="checkbox" name="studentLed" value="Yes">
+          <span>Student-led — I made this out of my own interest, not as classwork</span>
+        </label>
+
+        <div class="field field--wide">
+          <label for="photos"><span>Photos * <small>up to 6 · show the product, no faces</small></span></label>
+          <input id="photos" name="photos" type="file" accept="image/*" multiple required>
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+
+        <!-- left empty by people; bots fill it in -->
+        <label class="hp" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+
+        <div class="form__send">
+          <button class="btn-more" type="submit" id="send">Send it <span aria-hidden="true">→</span></button>
+          <p class="form__status" id="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-mark="End">
+    <p class="site-footer__big">Questions?</p>
+    <p class="site-footer__small">Talk to your design facilitator.</p>
+    <p class="site-footer__def"><b>bricolage</b> <i>(n.)</i> — creating something new from whatever is at hand.</p>
+    <p class="site-footer__meta">Bricolage · Design Department · MYP &amp; DP</p>
+  </footer>
+
+  <!-- main.js expects the project sheet to exist on every page -->
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+    <div class="sheet__inner" data-lenis-prevent>
+      <button class="sheet__close" id="sheet-close" aria-label="Close project">Close ✕</button>
+      <div id="sheet-body"></div>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/submit.js"></script>
+</body>
+</html>
