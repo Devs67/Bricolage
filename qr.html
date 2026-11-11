@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Bricolage</title>
+</head>
+<body style="font-family: system-ui, sans-serif; text-align: center; padding: 3rem 1rem;">
+  <p>Opening Bricolage… <a href="./">Tap here if nothing happens.</a></p>
+  <script>
+    // The QR code points here. Each scan is counted in the "Bricolage QR scans" Google Sheet
+    // (see logScan in apps-script/submit.gs), then the visitor goes on to the home page.
+    // More than one printed code? Point each at qr.html?src=poster, qr.html?src=lobby, … to tell them apart.
+    // Only scans of the live site are counted, not local testing.
+    const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbxXl2Wk31XvgT2H4AsqqtmYTbNVsz2iVX9F7Pt5xjaEbhGKn9CmbL6LHpPEP340_zGN/exec";
+    const source = new URLSearchParams(location.search).get("src") || "qr";
+    const logged = location.hostname.endsWith("github.io")
+      ? fetch(SUBMIT_URL, { method: "POST", body: JSON.stringify({ scan: source }), keepalive: true })
+      : Promise.resolve();
+    // Don't keep anyone waiting more than 1.5s if Google is slow.
+    Promise.race([logged, new Promise((r) => setTimeout(r, 1500))]).finally(() => location.replace("./"));
+  </script>
+</body>
+</html>

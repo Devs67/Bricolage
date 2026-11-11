@@ -1,7 +1,8 @@
 /*
   Bricolage — submission form mailer (Google Apps Script).
   The form on submit.html sends each submission here; this emails it to you
-  with the photos attached. Nothing is saved to Google Drive.
+  with the photos attached. Submissions aren't saved to Google Drive.
+  It also counts QR code scans (see logScan below) in a "Bricolage QR scans" sheet.
 
   Set up once:
     1. Go to https://script.google.com and click "New project".
@@ -44,6 +45,7 @@ const REQUIRED = ["project", "student", "grade", "type", "category", "descriptio
 function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
+    if (d.scan) return reply(logScan(d.scan));
     if (d.website) return reply({ ok: true }); // hidden field only bots fill in
 
     const get = (k, max = 1500) => String(d[k] || "").trim().slice(0, max);
@@ -70,6 +72,23 @@ function doPost(e) {
   } catch (err) {
     return reply({ ok: false, error: String(err) });
   }
+}
+
+// QR code scans: qr.html on the site sends one of these per scan. Each scan adds a row
+// to the "Bricolage QR scans" sheet in your Drive, which is made the first time.
+// Run this once by hand after pasting the new code: it asks for the Sheets permission,
+// makes the sheet, and adds a "test" row you can delete.
+function logScan(source = "test") {
+  const props = PropertiesService.getScriptProperties();
+  let id = props.getProperty("SCAN_SHEET_ID");
+  if (!id) {
+    const ss = SpreadsheetApp.create("Bricolage QR scans");
+    ss.getSheets()[0].getRange("A1:D1").setValues([["Time", "Source", "Total scans", "=COUNTA(A2:A)"]]);
+    id = ss.getId();
+    props.setProperty("SCAN_SHEET_ID", id);
+  }
+  SpreadsheetApp.openById(id).getSheets()[0].appendRow([new Date(), String(source).slice(0, 40)]);
+  return { ok: true };
 }
 
 // Moves submission emails out of the inbox and under the "Bricolage/To review" label.
