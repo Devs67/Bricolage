@@ -485,13 +485,36 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes grow { to { transform: scaleX(1); } }
 @keyframes fade { to { opacity: 1; } }
 
+/* The one line that says what this site is: bright and large, so it reads before anything else below DESIGN. */
+.hero__what {
+  margin: clamp(16px, 2.4vw, 32px) auto 0;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--paper);
+  opacity: 0;
+  animation: fade 0.6s ease 2.7s forwards;
+}
+/* "design" picked out in the marker handwriting, like "Let's" above */
+.hero__what-design {
+  font-family: var(--f-hand);
+  font-size: 1.7em;
+  font-weight: 400;
+  line-height: 0;
+  color: var(--marker);
+}
 .hero__sub {
-  margin: clamp(24px, 4vw, 48px) auto 0;
-  max-width: 34ch;
+  margin: 14px auto 0;
+  max-width: 46ch;
   font-size: clamp(16px, 1.6vw, 20px);
   color: var(--mat-print);
   opacity: 0;
-  animation: fade 0.6s ease 2.7s forwards;
+  animation: fade 0.6s ease 2.9s forwards;
+}
+.hero__cta {
+  opacity: 0;
+  animation: fade 0.6s ease 3.1s forwards;
 }
 
 /* MYP / DP — written straight onto the mat with a paint marker.
