@@ -580,22 +580,31 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .reveal.in { opacity: 1; transform: none; }
 
-/* ---------- Explore ---------- */
+/* ---------- Explore: three ways into The work, side by side just above it ---------- */
 .explore {
-  padding: clamp(24px, 4vw, 48px) var(--gutter) clamp(72px, 10vw, 140px);
+  padding: clamp(48px, 6vw, 88px) var(--gutter);
 }
-.explore__list { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
+.explore__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1.5px solid var(--ink);
+}
 .explore__list li { border-bottom: 1.5px solid var(--ink); }
+.explore__list li + li { border-left: 1.5px solid var(--ink); }
 
 .explore__row {
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas: "q arrow" "meta arrow";
-  align-items: center;
-  gap: 6px 24px;
+  align-items: start;
+  gap: 8px 16px;
   width: 100%;
-  padding: clamp(20px, 3vw, 36px) clamp(8px, 1.5vw, 20px);
+  height: 100%;
+  padding: 18px clamp(10px, 1.4vw, 20px) 20px;
   background: none;
   border: 0;
   text-align: left;
@@ -615,7 +624,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .explore__q {
   grid-area: q;
   font-family: var(--f-display);
-  font-size: clamp(34px, 6.4vw, 92px);
+  font-size: clamp(26px, 2.4vw, 38px);
   line-height: 0.95;
   font-variation-settings: "wdth" 80, "wght" 700;
   transition: font-variation-settings 0.5s var(--ease-out), color 0.3s;
@@ -630,15 +639,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .explore__arrow {
   grid-area: arrow;
   font-family: var(--f-display);
-  font-size: clamp(32px, 5vw, 72px);
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 0.95;
   transition: transform 0.45s var(--ease-out), color 0.3s;
 }
 
 @media (hover: hover) {
   .explore__row:hover::before { transform: scaleY(1); }
-  .explore__row:hover .explore__q { color: var(--paper); font-variation-settings: "wdth" 120, "wght" 800; }
+  .explore__row:hover .explore__q { color: var(--paper); font-variation-settings: "wdth" 90, "wght" 800; }
   .explore__row:hover .explore__meta { color: var(--mat-print); }
-  .explore__row:hover .explore__arrow { color: var(--marker); transform: translateX(-12px); }
+  .explore__row:hover .explore__arrow { color: var(--marker); transform: translateX(-6px); }
 }
 
 /* ---------- About ---------- */
@@ -803,6 +813,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); }
 @media (hover: hover) { .tab:hover:not([aria-selected="true"]) { background: var(--paper); } }
+/* Laptops and tablets: when this bar sticks, the tabs stay to the left of the menu floating at the top centre */
+@media (min-width: 761px) and (max-width: 1439px) {
+  .tabs { max-width: calc(50vw - var(--gutter) - 219px); }
+  .tab { padding: 8px 11px; }
+}
 
 .chips {
   display: flex;
@@ -835,6 +850,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .chip:disabled { opacity: 0.35; cursor: default; }
 @media (hover: hover) { .chip:hover:not(:disabled):not([aria-pressed="true"]) { transform: translateY(-2px); } }
 .chip sup { font-family: var(--f-mono); font-size: 10px; margin-left: 3px; color: var(--ink-soft); }
+.chips[hidden] { display: none; }
 
 /* Grade filter drawn as a ruler — it's a real sequence */
 .chips--ruler {
@@ -1028,6 +1044,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 700;
   letter-spacing: 0.01em;
   color: var(--ink);
+  -webkit-text-stroke: 0;
+}
+/* the grade is typed too: handwritten digits are easy to misread (1 / I, 2 / z) */
+.gallery .card__grade {
+  font-family: var(--f-mono);
+  font-size: 14px;
+  letter-spacing: 0.02em;
   -webkit-text-stroke: 0;
 }
 /* paper labels stuck on at an angle, hanging off the photo's edges */
@@ -1290,7 +1313,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 
-/* Best projects: each pick is a sheet of paper taped up on a dark wall */
+/* Best projects: on a dark wall */
 .spotlight,
 .best,
 .led { --sheet: #FBFAF5; overflow-x: clip; }
@@ -1321,64 +1344,44 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: #B9BEC6;
 }
 
+/* Best and student-led projects get a row each: a big print of the photo, the title,
+   and the student's name signed in marker with the grade circled, like MYP and DP in the hero */
 .spotlight__list {
   list-style: none;
-  margin: clamp(32px, 4vw, 56px) 0 0;
+  margin: clamp(40px, 5vw, 72px) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: clamp(16px, 2vw, 28px);
+  gap: clamp(56px, 7vw, 104px);
 }
-.draw { display: flex; }
-/* a sheet of paper taped up by its two top corners */
-.draw__btn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.feat__btn {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 76px);
   width: 100%;
-  padding: 18px 18px 20px;
-  background: var(--sheet);
+  padding: 0;
   border: 0;
-  color: var(--ink);
+  background: none;
   text-align: left;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 14px 28px rgba(0, 0, 0, 0.3);
-  transition: transform 0.4s var(--ease-out), rotate 0.4s var(--ease-out);
 }
-/* the sheet is held up by two paper labels at its top corners: the grade and the tag */
-.draw__tape {
-  position: absolute;
-  top: -14px;
-  z-index: 3;
-  padding: 2px 12px 0;
-  background: #fff;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
-  font-family: var(--f-hand);
-  font-size: 26px;
-  line-height: 1.1;
-  -webkit-text-stroke: 0.4px currentColor;
-  white-space: nowrap;
-  opacity: 0;
-  scale: 1.4;
+/* the photo is a print with a paper border, lying slightly askew; it straightens when you point at it */
+.feat__print {
+  display: block;
+  padding: 10px;
+  background: var(--sheet);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 18px 36px rgba(0, 0, 0, 0.4);
+  rotate: -1deg;
+  transition: rotate 0.4s var(--ease-out);
 }
-.draw__tape--grade { left: -12px; color: #1F4FB4; rotate: -8deg; }
-.draw__tape--tag { right: -12px; color: #C8352A; rotate: 7deg; }
-.led .draw__tape--tag { color: var(--mat); }
-.draw.in .draw__tape { animation: stick-on 0.4s cubic-bezier(0.5, 0, 0.75, 0) 0.4s forwards; }
-.draw.in .draw__tape--tag { animation-delay: 0.55s; }
-@keyframes stick-on { to { opacity: 1; scale: 1; } }
-@media (max-width: 760px) {
-  .draw__tape { font-size: 22px; }
-  .draw__tape--grade { left: -6px; }
-  .draw__tape--tag { right: -6px; }
-}
-.draw__frame {
+.feat:nth-child(even) .feat__print { order: 2; rotate: 1deg; }
+.feat__photo {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--ink);
+  aspect-ratio: 16 / 10;
   overflow: hidden;
+  background: #24272E;
 }
-.draw__frame img {
+.feat__photo img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1387,93 +1390,92 @@ button { font: inherit; color: inherit; cursor: pointer; }
   object-position: top;
   transition: transform 0.7s var(--ease-out);
 }
-/* dimension line under the picture */
-.draw__dim {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin: 10px 0 14px;
+.feat__kind {
   font-family: var(--f-mono);
-  font-size: 11px;
+  font-size: 11.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: #B9BEC6;
 }
-.draw__dim::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 8px;
-  margin-top: -4px;
-  border-left: 1px solid var(--ink-soft);
-  border-right: 1px solid var(--ink-soft);
-  background: linear-gradient(var(--ink-soft), var(--ink-soft)) center / 100% 1px no-repeat;
-}
-.draw__dim span { position: relative; padding: 0 10px; background: var(--sheet); }
-/* the teacher's note, in red pen */
-.draw__note {
+.feat__title {
   display: block;
-  margin: 0 4px 16px;
-  font-family: var(--f-hand);
-  font-size: clamp(24px, 2.2vw, 30px);
-  line-height: 1;
-  color: #C8352A;
-  rotate: -1deg;
-}
-.draw__note::before { content: "↳ "; }
-/* title block, like the corner of an engineering drawing */
-.draw__block {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
-  margin-top: auto;
-  border-top: 1.5px solid var(--ink);
-  border-left: 1.5px solid var(--ink);
-}
-.draw__cell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  padding: 7px 10px 8px;
-  border-right: 1.5px solid var(--ink);
-  border-bottom: 1.5px solid var(--ink);
-  font-size: 15px;
-  overflow-wrap: anywhere;
-}
-.draw__cell small {
-  font-family: var(--f-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.draw__cell--title {
-  grid-column: span 2;
+  margin-top: 10px;
   font-family: var(--f-display);
-  font-variation-settings: "wdth" 85, "wght" 750;
-  font-size: clamp(22px, 2.2vw, 30px);
-  line-height: 1.05;
+  font-variation-settings: "wdth" 75, "wght" 800;
+  font-size: clamp(36px, 4.6vw, 68px);
+  line-height: 0.94;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
-.draw__cell--wide { grid-column: 1 / -1; }
-.draw__cell .strengths { margin-top: 4px; }
-.draw__cell .strengths span { border-color: var(--ink); color: var(--ink); }
+.feat__by {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  margin-top: 18px;
+  color: var(--marker);
+  font-family: var(--f-hand);
+  line-height: 0.9;
+  -webkit-text-stroke: 0.4px currentColor;
+}
+.feat__name { font-size: clamp(42px, 4.2vw, 58px); rotate: -2deg; }
+/* the grade is typed, not handwritten: handwritten digits are too easy to misread (1 / I, 2 / z) */
+.feat__grade {
+  position: relative;
+  padding: 6px 8px;
+  font-family: var(--f-mono);
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  -webkit-text-stroke: 0;
+  rotate: 3deg;
+  white-space: nowrap;
+}
+.feat__grade svg {
+  position: absolute;
+  inset: -22%;
+  width: 144%;
+  height: 144%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--marker);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.feat__grade svg path { vector-effect: non-scaling-stroke; }
+.feat__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  margin-top: 20px;
+  max-width: 44ch;
+  font-size: 18px;
+  line-height: 1.45;
+  color: #C9CDD3;
+}
+.feat__text .strengths { margin-top: 16px; }
+.feat__open {
+  display: inline-block;
+  margin-top: 22px;
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--marker);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.led .feat__kind,
+.led .feat__desc { color: var(--mat-print); }
 @media (hover: hover) {
-  .draw__btn:hover { transform: translateY(-4px); }
-  .draw__btn:hover .draw__frame img,
-  .draw__btn:hover .ph__word { transform: scale(1.04); }
+  .feat .feat__btn:hover .feat__print { rotate: 0deg; }
+  .feat__btn:hover .feat__photo img,
+  .feat__btn:hover .ph__word { transform: scale(1.04); }
 }
-
-/* sheets lie slightly askew on the table, and straighten when you point at one */
-.draw:nth-child(3n + 1) .draw__btn { rotate: -0.6deg; }
-.draw:nth-child(3n + 2) .draw__btn { rotate: 0.5deg; }
-.draw:nth-child(3n) .draw__btn { rotate: -0.3deg; }
-@media (hover: hover) { .draw .draw__btn:hover { rotate: 0deg; } }
-@media (min-width: 900px) {
-  .spotlight__list:not(.spotlight__list--all) { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: clamp(24px, 3vw, 44px); }
-  /* student-led sheets are as big as the best project sheets, even when there's only one */
-  .led .spotlight__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 44px); }
+@media (max-width: 760px) {
+  .feat__btn { grid-template-columns: minmax(0, 1fr); }
+  .feat:nth-child(even) .feat__print { order: 0; }
 }
 
 .btn-more {
@@ -1648,8 +1650,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .sticker--myp, .sticker--dp { right: -0.1em; }
   .hero__lets { left: 0; top: -0.6em; }
   .hero__def { margin-bottom: 48px; }
+  .explore__list { grid-template-columns: minmax(0, 1fr); }
+  .explore__list li + li { border-left: 0; }
   .explore__row { grid-template-columns: 1fr; grid-template-areas: "q" "meta"; }
   .explore__arrow { display: none; }
+  /* the sticky filter bar stays two thin rows: tabs and chips scroll sideways instead of wrapping */
+  .filters { padding: 10px var(--gutter); }
+  .tabs, .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar, .chips::-webkit-scrollbar { display: none; }
+  .tab { flex: none; padding: 8px 9px; font-size: 11px; }
+  .chips { margin-top: 10px; }
+  .chip, .chips__group { flex: none; }
   .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; border-top: 0; }
   .cycle li { border-top: 1.5px solid var(--ink); }
   .sheet__grid { grid-template-columns: minmax(0, 1fr); }

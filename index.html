@@ -3,8 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bricolage — Design MYP to DP</title>
-  <meta name="description" content="Student design work from MYP 1 to DP 2 — digital and physical products made by our design students.">
+  <title>Bricolage — the student design showcase of SIS</title>
+  <meta name="description" content="Apps, games, furniture, electronics and more — designed and made by the design students of Sreenidhi International School, Grade 6 to Grade 12.">
+
+  <!-- Icon in the browser tab, and the preview card shown when the link is shared (WhatsApp, email, …) -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bricolage">
+  <meta property="og:title" content="Bricolage — the student design showcase of SIS">
+  <meta property="og:description" content="Apps, games, furniture, electronics and more — designed and made by the design students of Sreenidhi International School, Grade 6 to Grade 12.">
+  <meta property="og:url" content="https://devs67.github.io/Bricolage/">
+  <meta property="og:image" content="https://devs67.github.io/Bricolage/assets/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,6 +113,32 @@
       </ol>
     </section>
 
+    <!-- ===== Best projects ===== -->
+    <section class="spotlight" id="best-projects" aria-labelledby="spotlight-title" data-mark="Best">
+      <div class="spotlight__head">
+        <div>
+          <h2 class="spotlight__title" id="spotlight-title">Best projects</h2>
+          <p class="led__note" aria-hidden="true">picked by the design team — the ones that stood out</p>
+        </div>
+        <p class="spotlight__intro">Chosen by our design team for problem solving, real-world impact, technology used, creativity, user focus and sustainability.</p>
+      </div>
+      <ul class="spotlight__list" id="spotlight"></ul>
+      <a class="btn-more" href="best.html">See all best projects <span aria-hidden="true">→</span></a>
+    </section>
+
+    <!-- ===== Student-led projects ===== -->
+    <section class="led" id="student-led" aria-labelledby="led-title" data-mark="Student-led">
+      <div class="spotlight__head">
+        <div>
+          <h2 class="spotlight__title" id="led-title">Student-led</h2>
+          <p class="led__note" aria-hidden="true">made out of their own interest — nobody set this as homework</p>
+        </div>
+        <p class="spotlight__intro">Projects students started on their own — real websites, apps and products that real people use.</p>
+      </div>
+      <ul class="spotlight__list" id="led-list"></ul>
+      <a class="btn-more js-led" href="#projects">See all student-led projects <span aria-hidden="true">→</span></a>
+    </section>
+
     <!-- ===== Explore ===== -->
     <section class="explore" aria-labelledby="explore-title" data-mark="Explore">
       <h2 class="section-label" id="explore-title">Find your way in</h2>
@@ -127,32 +165,6 @@
           </button>
         </li>
       </ul>
-    </section>
-
-    <!-- ===== Best projects ===== -->
-    <section class="spotlight" id="best-projects" aria-labelledby="spotlight-title" data-mark="Best">
-      <div class="spotlight__head">
-        <div>
-          <h2 class="spotlight__title" id="spotlight-title">Best projects</h2>
-          <p class="led__note" aria-hidden="true">picked by the design team — the ones that stood out</p>
-        </div>
-        <p class="spotlight__intro">Chosen by our design team for problem solving, real-world impact, technology used, creativity, user focus and sustainability.</p>
-      </div>
-      <ul class="spotlight__list" id="spotlight"></ul>
-      <a class="btn-more" href="best.html">See all best projects <span aria-hidden="true">→</span></a>
-    </section>
-
-    <!-- ===== Student-led projects ===== -->
-    <section class="led" id="student-led" aria-labelledby="led-title" data-mark="Student-led">
-      <div class="spotlight__head">
-        <div>
-          <h2 class="spotlight__title" id="led-title">Student-led</h2>
-          <p class="led__note" aria-hidden="true">made out of their own interest — nobody set this as homework</p>
-        </div>
-        <p class="spotlight__intro">Projects students started on their own — real websites, apps and products that real people use.</p>
-      </div>
-      <ul class="spotlight__list spotlight__list--all" id="led-list"></ul>
-      <a class="btn-more js-led" href="#projects">See all student-led projects <span aria-hidden="true">→</span></a>
     </section>
 
     <!-- ===== Gallery ===== -->

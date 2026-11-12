@@ -243,7 +243,7 @@
         ${p.best ? `<span class="best-tag">★ Best project</span>` : ""}
         <span class="card__sticky">
           <span class="card__title">${esc(p.title)}</span>
-          <span class="card__meta"><b class="card__student student">${esc(p.student)}</b> · ${gradeOf(p)}</span>
+          <span class="card__meta"><b class="card__student student">${esc(p.student)}</b> · <span class="card__grade">${gradeOf(p)}</span></span>
         </span>
       </button>
     </li>`;
@@ -284,27 +284,25 @@
   const strengthsHTML = (p) =>
     `<span class="strengths">${(p.strengths || []).map((s) => `<span>${esc(s)}</span>`).join("")}</span>`;
 
-  // Best and student-led projects are taped-up paper sheets: framed picture, stamp, handwritten note, title block.
-  const drawHTML = (p, i, all, led = false) => {
+  // Best and student-led projects get a row each: big photo print, title,
+  // the student's name signed in marker and the grade circled (the same ring as MYP / DP in the hero).
+  const ring = `<svg viewBox="0 0 120 70" preserveAspectRatio="none" aria-hidden="true"><path d="M14,30 C18,12 52,5 82,8 C108,11 118,28 112,45 C105,62 62,68 34,62 C12,57 4,44 12,28 C18,17 34,11 54,9"/></svg>`;
+  const featHTML = (p, led = false) => {
     const media = p.images && p.images.length
       ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
       : placeholder(p);
-    const no = (n) => String(n).padStart(2, "0");
-    const note = led ? p.problem : p.why;
-    return `<li class="draw reveal">
-      <button class="draw__btn js-open" data-id="${esc(p.id)}">
-        <span class="draw__tape draw__tape--grade">${gradeOf(p)}</span>
-        <span class="draw__tape draw__tape--tag">${led ? "Student-led" : "★ Best project"}</span>
-        <span class="draw__frame">${media}</span>
-        <span class="draw__dim" aria-hidden="true"><span>${esc(p.type || p.category)}</span></span>
-        ${note ? `<span class="draw__note">${esc(note)}</span>` : ""}
-        <span class="draw__block">
-          <span class="draw__cell draw__cell--title"><small>Project</small>${esc(p.title)}</span>
-          <span class="draw__cell"><small>Sheet</small>${no(i + 1)} / ${no(all.length)}</span>
-          <span class="draw__cell"><small>Designed by</small><b class="student">${esc(p.student)}</b></span>
-          <span class="draw__cell"><small>Grade</small>${gradeOf(p)}</span>
-          <span class="draw__cell"><small>Category</small>${esc(p.category)}</span>
-          ${p.strengths && p.strengths.length ? `<span class="draw__cell draw__cell--wide"><small>Stands out for</small>${strengthsHTML(p)}</span>` : ""}
+    const kind = [p.category, p.type].filter(Boolean).map(esc).join(" · ");
+    const line = led ? p.problem : p.why || p.problem;
+    return `<li class="feat reveal">
+      <button class="feat__btn js-open" data-id="${esc(p.id)}">
+        <span class="feat__print"><span class="feat__photo">${media}</span></span>
+        <span class="feat__text">
+          <span class="feat__kind">${kind}</span>
+          <span class="feat__title">${esc(p.title)}</span>
+          <span class="feat__by"><span class="feat__name">by ${esc(p.student)}</span><span class="feat__grade">${gradeOf(p)}${ring}</span></span>
+          ${line ? `<span class="feat__desc">${esc(line)}</span>` : ""}
+          ${p.strengths && p.strengths.length ? strengthsHTML(p) : ""}
+          <span class="feat__open" aria-hidden="true">Open project →</span>
         </span>
       </button>
     </li>`;
@@ -315,14 +313,14 @@
   // Home page: first 3 best projects
   const spotlight = $("#spotlight");
   if (spotlight) {
-    spotlight.innerHTML = bestProjects.slice(0, 3).map(drawHTML).join("");
+    spotlight.innerHTML = bestProjects.slice(0, 3).map((p) => featHTML(p)).join("");
     showReveals(spotlight);
   }
 
-  /* ---------- Student-led projects (same paper sheets, stamped "Student-led") ---------- */
+  /* ---------- Student-led projects (same rows as the best projects) ---------- */
   const ledList = $("#led-list");
   if (ledList) {
-    ledList.innerHTML = projects.filter((p) => p.studentLed).slice(0, 3).map((p, i, a) => drawHTML(p, i, a, true)).join("");
+    ledList.innerHTML = projects.filter((p) => p.studentLed).slice(0, 3).map((p) => featHTML(p, true)).join("");
     showReveals(ledList);
   }
   $$(".js-led").forEach((a) => a.addEventListener("click", () => setMode("led")));
@@ -343,12 +341,15 @@
     const renderBest = () => {
       const list = strength === "all" ? bestProjects : bestProjects.filter((p) => (p.strengths || []).includes(strength));
       const count = (name) => bestProjects.filter((p) => (p.strengths || []).includes(name)).length;
+      // only strengths that some project has; with none (sheet not filled in yet) the filter bar stays hidden
+      const used = (data.criteria || []).filter((c) => count(c.name) > 0);
+      bestChips.hidden = used.length === 0;
       bestChips.innerHTML =
         `<button class="chip" data-value="all" aria-pressed="${strength === "all"}">All<sup>${bestProjects.length}</sup></button>` +
-        (data.criteria || [])
-          .map((c) => `<button class="chip" data-value="${esc(c.name)}" aria-pressed="${strength === c.name}"${count(c.name) === 0 ? " disabled" : ""}>${esc(c.name)}<sup>${count(c.name)}</sup></button>`)
+        used
+          .map((c) => `<button class="chip" data-value="${esc(c.name)}" aria-pressed="${strength === c.name}">${esc(c.name)}<sup>${count(c.name)}</sup></button>`)
           .join("");
-      bestGrid.innerHTML = list.map(drawHTML).join("");
+      bestGrid.innerHTML = list.map((p) => featHTML(p)).join("");
       $("#best-count").textContent = `${list.length} project${list.length === 1 ? "" : "s"}`;
       $$(".reveal", bestGrid).forEach((el) => el.classList.add("in"));
     };
@@ -394,7 +395,7 @@
       <div class="sheet__media">${media}</div>${thumbs}
       <div class="sheet__grid">
         <div>
-          <p class="sheet__kicker">${gradeOf(p)} ·${esc(p.type)} · ${esc(p.category)}${p.studentLed ? " · Student-led" : ""}</p>
+          <p class="sheet__kicker">${gradeOf(p)} · ${esc(p.type)} · ${esc(p.category)}${p.studentLed ? " · Student-led" : ""}</p>
           <h2 class="sheet__title" id="sheet-title">${esc(p.title)}</h2>
           <p class="sheet__by">by <strong class="student">${esc(p.student)}</strong>${p.classOf ? ` · Class of ${esc(p.classOf)}` : ""}</p>
           <p class="sheet__problem">${esc(p.problem)}</p>
@@ -404,9 +405,9 @@
             <ol>${p.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
           </div>` : ""}
           ${p.best ? `<div class="sheet__best">
-            <p class="sheet__best-label">★ Best project — why it stands out</p>
+            <p class="sheet__best-label">★ Best project${p.why || (p.strengths || []).length ? " — why it stands out" : ""}</p>
             ${p.why ? `<p class="sheet__best-why">${esc(p.why)}</p>` : ""}
-            ${strengthsHTML(p)}
+            ${(p.strengths || []).length ? strengthsHTML(p) : ""}
           </div>` : ""}
         </div>
         <div>
