@@ -1173,6 +1173,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--pencil);
 }
 .site-footer__visits[hidden] { display: none; }
+.site-footer__visits + .site-footer__visits { margin-top: 10px; }
 .site-footer__digits { display: inline-flex; gap: 3px; }
 .site-footer__digits span {
   display: grid;

@@ -460,20 +460,26 @@
   }
   if (location.hash.startsWith("#project/")) openProject(decodeURIComponent(location.hash.slice(9)));
 
-  /* ---------- Visitor counter (free counter service: abacus.jasoncameron.dev) ----------
-     Each visit counts once, however many pages are opened. Stays hidden if the service can't be reached. */
+  /* ---------- Visitor counters (free counter service: abacus.jasoncameron.dev) ----------
+     Two counters: every visit so far, and visits today (a separate counter per day).
+     Each visit counts once, however many pages are opened. A counter stays hidden if the service can't be reached. */
   const visits = $("#visits");
   if (visits) {
     const key = location.hostname.endsWith("github.io") ? "visits" : "visits-test";
-    let counted = false;
-    try { counted = sessionStorage.getItem("bricolage-counted") === "1"; } catch {}
-    fetch(`https://abacus.jasoncameron.dev/${counted ? "get" : "hit"}/bricolage-sis-design/${key}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then(({ value }) => {
-        try { sessionStorage.setItem("bricolage-counted", "1"); } catch {}
-        $("#visits-n", visits).innerHTML = String(value).padStart(5, "0").split("").map((d) => `<span>${d}</span>`).join("");
-        visits.hidden = false;
-      })
-      .catch(() => {});
+    // "today" is the date in India for every visitor, so the daily count starts again at midnight at school
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+    const seen = (name) => { try { return sessionStorage.getItem(name); } catch { return null; } };
+    // el = the footer line to fill, counter = its name at the service, mark/value = how this tab remembers it has been counted
+    const count = (el, counter, digits, mark, value) =>
+      fetch(`https://abacus.jasoncameron.dev/${seen(mark) === value ? "get" : "hit"}/bricolage-sis-design/${counter}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((data) => {
+          try { sessionStorage.setItem(mark, value); } catch {}
+          $(".site-footer__digits", el).innerHTML = String(data.value).padStart(digits, "0").split("").map((d) => `<span>${d}</span>`).join("");
+          el.hidden = false;
+        })
+        .catch(() => {});
+    count(visits, key, 5, "bricolage-counted", "1");
+    count($("#visits-today"), `${key}-${today}`, 3, "bricolage-counted-day", today);
   }
 })();
