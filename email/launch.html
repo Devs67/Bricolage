@@ -17,69 +17,83 @@
     Subject: Your project belongs on the wall.
   -->
   <style>
-    @media (max-width: 620px) {
+    /* Phones: side-by-side columns stack, type steps down */
+    @media (max-width: 760px) {
       .px { padding-left: 20px !important; padding-right: 20px !important; }
       .stack { display: block !important; width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; }
-      .stack-gap { padding: 0 0 14px 0 !important; }
-      .h1 { font-size: 32px !important; }
+      .stack-gap { padding-bottom: 14px !important; }
+      .panel { display: block !important; width: 100% !important; padding: 32px 20px !important; }
+      .panel-line { border-left: 0 !important; border-top: 2px solid #15171C !important; }
+      .h1 { font-size: 36px !important; }
+      .h2 { font-size: 26px !important; }
+      .lede { font-size: 17px !important; }
       .thumb-text { font-size: 12px !important; }
+      .thumb { padding: 0 4px !important; }
+      .to-left { text-align: left !important; }
+      .btn { padding: 16px 24px !important; font-size: 18px !important; }
     }
   </style>
 </head>
-<body style="margin:0; padding:0; background:#1E5A45;">
+<body style="margin:0; padding:0;">
   <!-- Preview line shown next to the subject in the inbox -->
   <div style="display:none; max-height:0; overflow:hidden; opacity:0;">Apps, games, websites, furniture, electronics, from MYP 1 to DP 2. Is yours up yet?</div>
 
-  <!-- The email sits on the green cutting mat, like the site's hero. Mail apps that skip
-       background images (Outlook on Windows) show plain mat green instead. -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1E5A45" style="background-color:#1E5A45;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
     <tr>
-      <td align="center" style="padding:40px 12px; background-color:#1E5A45; background-image:url('https://devs67.github.io/Bricolage/email/images/mat.png'); background-repeat:repeat; background-size:60px 60px;">
-        <!-- The email is a 600px column. The div and max-width hold it there even where the <style> above is dropped
-             (Gmail, copy-paste); Outlook ignores max-width, so it gets its own 600px table. -->
-        <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-        <div style="max-width:600px; margin:0 auto;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px; margin:0 auto; background:#ECEEE9; border:2px solid #15171C; font-family:Arial, Helvetica, sans-serif; color:#15171C;">
+      <td align="center" style="padding:24px 12px;">
+        <!-- The email fills the reading pane up to 1000px. The div and max-width hold it there even where the
+             <style> above is dropped; Outlook ignores max-width, so it gets its own 1000px table. -->
+        <!--[if mso]><table role="presentation" width="1000" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+        <div style="max-width:1000px; margin:0 auto;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:1000px; margin:0 auto; background:#ECEEE9; border:2px solid #15171C; font-family:Arial, Helvetica, sans-serif; color:#15171C;">
 
           <!-- Header: the cutting mat -->
           <tr>
             <td style="padding:0;">
-              <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-header" style="display:block;"><img src="https://devs67.github.io/Bricolage/email/images/header.gif" width="600" height="350" alt="Let's DESIGN. Bricolage, the student design showcase of SIS. MYP 1 to DP 2, now open." style="display:block; width:100%; max-width:600px; height:auto; border:0;"></a>
+              <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-header" style="display:block;"><img src="https://devs67.github.io/Bricolage/email/images/header.gif" width="1000" height="380" alt="Let's DESIGN. Bricolage, the student design showcase of SIS. MYP 1 to DP 2, now open." style="display:block; width:100%; max-width:1000px; height:auto; border:0;"></a>
             </td>
           </tr>
 
-          <!-- Big line -->
+          <!-- Big line: headline left, what it is right -->
           <tr>
-            <td class="px" style="padding:40px 40px 8px;">
-              <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">New at SIS</p>
-              <h1 class="h1" style="margin:10px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:40px; line-height:1.05; color:#15171C;">Your work belongs on&nbsp;the&nbsp;wall.</h1>
-              <p style="margin:18px 0 0; font-size:18px; line-height:1.5; color:#15171C;">
-                <b>Bricolage</b> is SIS's new student design showcase: apps, games, websites, furniture, electronics and more, made by students from <b style="background:#F2D640; padding:0 3px;">MYP&nbsp;1 to DP&nbsp;2</b>, all in one place.
-              </p>
+            <td class="px" style="padding:52px 56px 8px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="stack stack-gap" width="55%" valign="top" style="padding:0 40px 0 0;">
+                    <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">New at SIS</p>
+                    <h1 class="h1" style="margin:12px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:56px; line-height:1.02; color:#15171C;">Your work belongs on&nbsp;the&nbsp;wall.</h1>
+                  </td>
+                  <td class="stack" width="45%" valign="bottom" style="padding:0;">
+                    <p class="lede" style="margin:0; font-size:20px; line-height:1.5; color:#15171C;">
+                      <b>Bricolage</b> is SIS's new student design showcase: apps, games, websites, furniture, electronics and more, made by students from <b style="background:#F2D640; padding:0 3px;">MYP&nbsp;1 to DP&nbsp;2</b>, all in one place.
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- What counts: two kinds of project -->
           <tr>
-            <td class="px" style="padding:28px 40px 8px;">
-              <p style="margin:0 0 14px; font-family:'Courier New', Courier, monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">Two ways onto the wall</p>
+            <td class="px" style="padding:40px 56px 8px;">
+              <p style="margin:0 0 16px; font-family:'Courier New', Courier, monospace; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">Two ways onto the wall</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td class="stack stack-gap" width="50%" valign="top" style="padding:0 8px 0 0;">
+                  <td class="stack stack-gap" width="50%" valign="top" style="padding:0 10px 0 0;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FBFAF5; border:2px solid #15171C;">
-                      <tr><td style="padding:8px 14px; background:#F2D640; border-bottom:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">From class</td></tr>
-                      <tr><td style="padding:16px 16px 18px;">
-                        <p style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:20px; line-height:1.15;">Made in your Design&nbsp;SA</p>
-                        <p style="margin:8px 0 0; font-size:15px; line-height:1.5; color:#4A4F57;">That project you spent weeks on? Don't let it sit in a folder. Put it where the whole school can see it.</p>
+                      <tr><td style="padding:10px 18px; background:#F2D640; border-bottom:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:13px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">From class</td></tr>
+                      <tr><td style="padding:22px 22px 24px;">
+                        <p class="h2" style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:28px; line-height:1.12;">Made in your Design&nbsp;SA</p>
+                        <p style="margin:10px 0 0; font-size:17px; line-height:1.5; color:#4A4F57;">That project you spent weeks on? Don't let it sit in a folder. Put it where the whole school can see it.</p>
                       </td></tr>
                     </table>
                   </td>
-                  <td class="stack" width="50%" valign="top" style="padding:0 0 0 8px;">
+                  <td class="stack" width="50%" valign="top" style="padding:0 0 0 10px;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FBFAF5; border:2px solid #15171C;">
-                      <tr><td style="padding:8px 14px; background:#1E5A45; color:#ECEEE9; border-bottom:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">On your own</td></tr>
-                      <tr><td style="padding:16px 16px 18px;">
-                        <p style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:20px; line-height:1.15;">Made because you wanted&nbsp;to</p>
-                        <p style="margin:8px 0 0; font-size:15px; line-height:1.5; color:#4A4F57;">A website, an app, a gadget you built at home. If nobody set it as homework, we want it even more.</p>
+                      <tr><td style="padding:10px 18px; background:#1E5A45; color:#ECEEE9; border-bottom:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:13px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">On your own</td></tr>
+                      <tr><td style="padding:22px 22px 24px;">
+                        <p class="h2" style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:28px; line-height:1.12;">Made because you wanted&nbsp;to</p>
+                        <p style="margin:10px 0 0; font-size:17px; line-height:1.5; color:#4A4F57;">A website, an app, a gadget you built at home. If nobody set it as homework, we want it even more.</p>
                       </td></tr>
                     </table>
                   </td>
@@ -90,130 +104,114 @@
 
           <!-- Already on the wall -->
           <tr>
-            <td style="padding:32px 0 0;">
+            <td style="padding:48px 0 0;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#15171C; color:#ECEEE9;">
                 <tr>
-                  <td class="px" style="padding:36px 40px 10px;">
-                    <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#B9BEC6;">Already on the wall</p>
-                    <p style="margin:8px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:26px; line-height:1.15; color:#ECEEE9;">Your classmates got there first.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px" style="padding:16px 34px 8px;">
+                  <td class="px" style="padding:44px 56px 12px;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td width="33%" valign="top" style="padding:0 6px;">
-                          <a href="https://devs67.github.io/Bricolage/#project/study-buddy-edu" style="text-decoration:none; color:#ECEEE9;">
-                            <img src="https://devs67.github.io/Bricolage/email/images/study-buddy-edu.jpg" width="164" alt="Study Buddy Edu" style="display:block; width:100%; max-width:164px; height:auto; border:5px solid #FBFAF5;">
-                            <p class="thumb-text" style="margin:10px 0 0; font-size:14px; font-weight:bold; line-height:1.3; color:#F2D640;">Jaivardhan</p>
-                            <p class="thumb-text" style="margin:2px 0 0; font-family:'Courier New', Courier, monospace; font-size:13px; color:#B9BEC6;">MYP 1D</p>
-                            <p class="thumb-text" style="margin:4px 0 0; font-size:14px; line-height:1.3; color:#ECEEE9;">Study Buddy Edu, an app</p>
-                          </a>
+                        <td class="stack stack-gap" valign="bottom" style="padding:0;">
+                          <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#B9BEC6;">Already on the wall</p>
+                          <p class="h2" style="margin:8px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:36px; line-height:1.1; color:#ECEEE9;">Your classmates got there first.</p>
                         </td>
-                        <td width="33%" valign="top" style="padding:0 6px;">
-                          <a href="https://devs67.github.io/Bricolage/#project/cardboard-air-fryer-prototype" style="text-decoration:none; color:#ECEEE9;">
-                            <img src="https://devs67.github.io/Bricolage/email/images/cardboard-air-fryer.jpg" width="164" alt="Cardboard Air Fryer Prototype" style="display:block; width:100%; max-width:164px; height:auto; border:5px solid #FBFAF5;">
-                            <p class="thumb-text" style="margin:10px 0 0; font-size:14px; font-weight:bold; line-height:1.3; color:#F2D640;">Vihaan C.</p>
-                            <p class="thumb-text" style="margin:2px 0 0; font-family:'Courier New', Courier, monospace; font-size:13px; color:#B9BEC6;">MYP 2A</p>
-                            <p class="thumb-text" style="margin:4px 0 0; font-size:14px; line-height:1.3; color:#ECEEE9;">Cardboard Air Fryer, a product</p>
-                          </a>
-                        </td>
-                        <td width="33%" valign="top" style="padding:0 6px;">
-                          <a href="https://devs67.github.io/Bricolage/#project/velvet-whisk-bakery" style="text-decoration:none; color:#ECEEE9;">
-                            <img src="https://devs67.github.io/Bricolage/email/images/velvet-whisk-bakery.jpg" width="164" alt="Velvet &amp; Whisk Bakery" style="display:block; width:100%; max-width:164px; height:auto; border:5px solid #FBFAF5;">
-                            <p class="thumb-text" style="margin:10px 0 0; font-size:14px; font-weight:bold; line-height:1.3; color:#F2D640;">Shakya K.</p>
-                            <p class="thumb-text" style="margin:2px 0 0; font-family:'Courier New', Courier, monospace; font-size:13px; color:#B9BEC6;">MYP 3B</p>
-                            <p class="thumb-text" style="margin:4px 0 0; font-size:14px; line-height:1.3; color:#ECEEE9;">Velvet &amp; Whisk, a website nobody set as homework</p>
-                          </a>
+                        <td class="stack" align="right" valign="bottom" style="padding:0 0 6px; white-space:nowrap; text-align:right;">
+                          <a href="https://devs67.github.io/Bricolage/#projects" style="font-family:'Courier New', Courier, monospace; font-size:15px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:#ECEEE9; text-decoration:none; border-bottom:2px solid #F2D640; padding-bottom:3px;">See every project &rarr;</a>
                         </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
                 <tr>
-                  <td class="px" style="padding:18px 40px 38px;">
-                    <a href="https://devs67.github.io/Bricolage/#projects" style="font-family:'Courier New', Courier, monospace; font-size:14px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:#ECEEE9; text-decoration:none; border-bottom:2px solid #F2D640; padding-bottom:3px;">See every project &rarr;</a>
+                  <td class="px" style="padding:20px 48px 48px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td class="thumb" width="33%" valign="top" style="padding:0 8px;">
+                          <a href="https://devs67.github.io/Bricolage/#project/study-buddy-edu" style="text-decoration:none; color:#ECEEE9;">
+                            <img src="https://devs67.github.io/Bricolage/email/images/study-buddy-edu.jpg" width="284" alt="Study Buddy Edu" style="display:block; width:100%; max-width:100%; height:auto; border:6px solid #FBFAF5; box-sizing:border-box;">
+                            <p class="thumb-text" style="margin:14px 0 0; font-size:17px; font-weight:bold; line-height:1.3; color:#F2D640;">Jaivardhan</p>
+                            <p class="thumb-text" style="margin:3px 0 0; font-family:'Courier New', Courier, monospace; font-size:14px; color:#B9BEC6;">MYP 1D</p>
+                            <p class="thumb-text" style="margin:6px 0 0; font-size:16px; line-height:1.35; color:#ECEEE9;">Study Buddy Edu, an app</p>
+                          </a>
+                        </td>
+                        <td class="thumb" width="33%" valign="top" style="padding:0 8px;">
+                          <a href="https://devs67.github.io/Bricolage/#project/cardboard-air-fryer-prototype" style="text-decoration:none; color:#ECEEE9;">
+                            <img src="https://devs67.github.io/Bricolage/email/images/cardboard-air-fryer.jpg" width="284" alt="Cardboard Air Fryer Prototype" style="display:block; width:100%; max-width:100%; height:auto; border:6px solid #FBFAF5; box-sizing:border-box;">
+                            <p class="thumb-text" style="margin:14px 0 0; font-size:17px; font-weight:bold; line-height:1.3; color:#F2D640;">Vihaan C.</p>
+                            <p class="thumb-text" style="margin:3px 0 0; font-family:'Courier New', Courier, monospace; font-size:14px; color:#B9BEC6;">MYP 2A</p>
+                            <p class="thumb-text" style="margin:6px 0 0; font-size:16px; line-height:1.35; color:#ECEEE9;">Cardboard Air Fryer, a product</p>
+                          </a>
+                        </td>
+                        <td class="thumb" width="33%" valign="top" style="padding:0 8px;">
+                          <a href="https://devs67.github.io/Bricolage/#project/velvet-whisk-bakery" style="text-decoration:none; color:#ECEEE9;">
+                            <img src="https://devs67.github.io/Bricolage/email/images/velvet-whisk-bakery.jpg" width="284" alt="Velvet &amp; Whisk Bakery" style="display:block; width:100%; max-width:100%; height:auto; border:6px solid #FBFAF5; box-sizing:border-box;">
+                            <p class="thumb-text" style="margin:14px 0 0; font-size:17px; font-weight:bold; line-height:1.3; color:#F2D640;">Shakya K.</p>
+                            <p class="thumb-text" style="margin:3px 0 0; font-family:'Courier New', Courier, monospace; font-size:14px; color:#B9BEC6;">MYP 3B</p>
+                            <p class="thumb-text" style="margin:6px 0 0; font-size:16px; line-height:1.35; color:#ECEEE9;">Velvet &amp; Whisk, a website nobody set as homework</p>
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- How to get on it -->
+          <!-- How to get on it: three steps across, then the button -->
           <tr>
-            <td class="px" style="padding:40px 40px 8px;">
-              <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">How to get on the wall</p>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+            <td class="px" style="padding:52px 56px 52px;">
+              <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#4A4F57;">How to get on the wall</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;">
                 <tr>
-                  <td width="44" valign="top" style="padding:0 0 16px;"><div style="width:32px; height:32px; line-height:32px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:16px; font-weight:bold;">1</div></td>
-                  <td valign="top" style="padding:4px 0 16px; font-size:17px; line-height:1.45;"><b>Take a few photos</b> or screenshots of your project.</td>
-                </tr>
-                <tr>
-                  <td width="44" valign="top" style="padding:0 0 16px;"><div style="width:32px; height:32px; line-height:32px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:16px; font-weight:bold;">2</div></td>
-                  <td valign="top" style="padding:4px 0 16px; font-size:17px; line-height:1.45;"><b>Fill in the form.</b> It takes about five minutes.</td>
-                </tr>
-                <tr>
-                  <td width="44" valign="top" style="padding:0;"><div style="width:32px; height:32px; line-height:32px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:16px; font-weight:bold;">3</div></td>
-                  <td valign="top" style="padding:4px 0 0; font-size:17px; line-height:1.45;"><b>The design team checks it and puts it up</b> for the whole school to see.</td>
+                  <td class="stack stack-gap" width="33%" valign="top" style="padding:0 16px 0 0;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #15171C;"><tr><td style="padding:16px 0 0;">
+                      <div style="width:36px; height:36px; line-height:36px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:18px; font-weight:bold;">1</div>
+                      <p style="margin:14px 0 0; font-size:18px; line-height:1.45;"><b>Take a few photos</b> or screenshots of your project.</p>
+                    </td></tr></table>
+                  </td>
+                  <td class="stack stack-gap" width="33%" valign="top" style="padding:0 8px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #15171C;"><tr><td style="padding:16px 0 0;">
+                      <div style="width:36px; height:36px; line-height:36px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:18px; font-weight:bold;">2</div>
+                      <p style="margin:14px 0 0; font-size:18px; line-height:1.45;"><b>Fill in the form.</b> It takes about five minutes.</p>
+                    </td></tr></table>
+                  </td>
+                  <td class="stack" width="33%" valign="top" style="padding:0 0 0 16px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #15171C;"><tr><td style="padding:16px 0 0;">
+                      <div style="width:36px; height:36px; line-height:36px; text-align:center; background:#15171C; color:#F2D640; font-family:'Courier New', Courier, monospace; font-size:18px; font-weight:bold;">3</div>
+                      <p style="margin:14px 0 0; font-size:18px; line-height:1.45;"><b>The design team checks it and puts it up</b> for the whole school to see.</p>
+                    </td></tr></table>
+                  </td>
                 </tr>
               </table>
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:32px;">
                 <tr>
                   <td bgcolor="#F2D640" style="background:#F2D640; border:2px solid #15171C;">
-                    <a href="https://devs67.github.io/Bricolage/submit.html" style="display:inline-block; padding:16px 30px; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:18px; color:#15171C; text-decoration:none;">Submit your project &rarr;</a>
+                    <a class="btn" href="https://devs67.github.io/Bricolage/submit.html" style="display:inline-block; padding:18px 36px; white-space:nowrap; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:20px; color:#15171C; text-decoration:none;">Submit your project &rarr;</a>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- What's in it: best project of the month + assembly shout-out -->
+          <!-- What's in it (left) and the race between grades (right), side by side -->
           <tr>
-            <td class="px" style="padding:40px 40px 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FBFAF5; border:2px solid #15171C;">
+            <td style="padding:0; border-top:2px solid #15171C; border-bottom:2px solid #15171C;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding:24px 24px 6px;">
-                    <span style="display:inline-block; padding:6px 12px; background:#F2D640; border:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">&#9733; Every month</span>
-                    <p style="margin:14px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:26px; line-height:1.15;">Best project of the month</p>
-                    <p style="margin:8px 0 0; font-size:16px; line-height:1.5; color:#4A4F57;">Each month the design team picks one project that stands out.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 24px 24px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td class="stack stack-gap" width="50%" valign="top" style="padding:0 8px 0 0;">
-                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #15171C;">
-                            <tr><td style="padding:12px 0 0; font-size:16px; line-height:1.45;"><span style="font-size:22px;">&#11088;</span><br><b>Top of the wall.</b> Featured first on Bricolage for the whole month.</td></tr>
-                          </table>
-                        </td>
-                        <td class="stack" width="50%" valign="top" style="padding:0 0 0 8px;">
-                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #15171C;">
-                            <tr><td style="padding:12px 0 0; font-size:16px; line-height:1.45;"><span style="font-size:22px;">&#128227;</span><br><b>A shout-out in assembly,</b> in front of the whole school.</td></tr>
-                          </table>
-                        </td>
-                      </tr>
+                  <td class="panel" width="50%" valign="top" bgcolor="#FBFAF5" style="padding:44px 40px 44px 56px; background:#FBFAF5;">
+                    <span style="display:inline-block; padding:6px 12px; background:#F2D640; border:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:13px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">&#9733; Every month</span>
+                    <p class="h2" style="margin:16px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:34px; line-height:1.1;">Best project of the month</p>
+                    <p style="margin:10px 0 0; font-size:17px; line-height:1.5; color:#4A4F57;">Each month the design team picks one project that stands out.</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
+                      <tr><td style="padding:14px 0; border-top:2px solid #15171C; font-size:17px; line-height:1.45;"><span style="font-size:24px;">&#11088;</span>&nbsp; <b>Top of the wall.</b> Featured first on Bricolage for the whole month.</td></tr>
+                      <tr><td style="padding:14px 0 0; border-top:2px solid #15171C; font-size:17px; line-height:1.45;"><span style="font-size:24px;">&#128227;</span>&nbsp; <b>A shout-out in assembly,</b> in front of the whole school.</td></tr>
                     </table>
                   </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- The race between grades -->
-          <tr>
-            <td style="padding:40px 0 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1E5A45; color:#ECEEE9;">
-                <tr>
-                  <td class="px" style="padding:36px 40px 6px;">
-                    <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#C9E4D3;">The race is on</p>
-                    <p style="margin:8px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:26px; line-height:1.15; color:#ECEEE9;">Which grade fills the wall first?</p>
+                  <td class="panel panel-line" width="50%" valign="top" bgcolor="#1E5A45" style="padding:44px 56px 44px 40px; background:#1E5A45; color:#ECEEE9; border-left:2px solid #15171C;">
+                    <p style="margin:0; font-family:'Courier New', Courier, monospace; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#C9E4D3;">The race is on</p>
+                    <p class="h2" style="margin:10px 0 0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:34px; line-height:1.1; color:#ECEEE9;">Which grade fills the wall first?</p>
                     <p style="margin:10px 0 0; font-size:16px; line-height:1.5; color:#C9E4D3;">Projects on the wall right now. We'll share the count every Friday.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px" style="padding:16px 40px 8px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-family:'Courier New', Courier, monospace; font-size:14px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px; font-family:'Courier New', Courier, monospace; font-size:14px;">
                       <tr>
                         <td width="64" style="padding:5px 0; color:#C9E4D3;">MYP 1</td>
                         <td style="padding:5px 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#174836;"><tr><td width="20%" height="20" style="background:#F2D640; font-size:0; line-height:0;">&nbsp;</td><td style="font-size:0; line-height:0;">&nbsp;</td></tr></table></td>
@@ -250,54 +248,60 @@
                         <td width="36" align="right" style="padding:5px 0; color:#8FB3A0;">0</td>
                       </tr>
                     </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px" style="padding:14px 40px 38px; font-size:16px; line-height:1.5; color:#ECEEE9;">
-                    <b style="color:#F2D640;">MYP 2 is way ahead.</b> MYP 4, MYP 5 and DP: the wall is waiting for you.
+                    <p style="margin:18px 0 0; font-size:16px; line-height:1.5; color:#ECEEE9;"><b style="color:#F2D640;">MYP 2 is way ahead.</b> MYP 4, MYP 5 and DP: the wall is waiting for you.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Are you in? One tap each -->
+          <!-- Are you in? One tap each, three across -->
           <tr>
-            <td class="px" style="padding:40px 40px 8px;">
-              <p style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:26px; line-height:1.15;">Are you in?</p>
-              <p style="margin:8px 0 18px; font-size:15px; line-height:1.5; color:#4A4F57;">One tap. We only count the taps, no names.</p>
+            <td class="px" style="padding:52px 56px 8px;">
+              <p class="h2" style="margin:0; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:36px; line-height:1.1;">Are you in?</p>
+              <p style="margin:8px 0 20px; font-size:17px; line-height:1.5; color:#4A4F57;">One tap. We only count the taps, no names.</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr><td style="padding:0 0 10px;">
-                  <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-ready" style="display:block; padding:15px 18px; background:#FBFAF5; border:2px solid #15171C; font-size:17px; font-weight:bold; color:#15171C; text-decoration:none;">&#128587;&nbsp; I've got a project ready</a>
-                </td></tr>
-                <tr><td style="padding:0 0 10px;">
-                  <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-making" style="display:block; padding:15px 18px; background:#FBFAF5; border:2px solid #15171C; font-size:17px; font-weight:bold; color:#15171C; text-decoration:none;">&#128736;&nbsp; I'm making one now</a>
-                </td></tr>
-                <tr><td style="padding:0;">
-                  <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-look" style="display:block; padding:15px 18px; background:#FBFAF5; border:2px solid #15171C; font-size:17px; font-weight:bold; color:#15171C; text-decoration:none;">&#128064;&nbsp; I'll have a look first</a>
-                </td></tr>
+                <tr>
+                  <td class="stack stack-gap" width="33%" valign="top" style="padding:0 8px 0 0;">
+                    <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-ready" style="display:block; padding:20px 20px; background:#FBFAF5; border:2px solid #15171C; font-size:18px; font-weight:bold; line-height:1.3; color:#15171C; text-decoration:none;"><span style="font-size:26px;">&#128587;</span><br>I've got a project ready</a>
+                  </td>
+                  <td class="stack stack-gap" width="33%" valign="top" style="padding:0 4px;">
+                    <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-making" style="display:block; padding:20px 20px; background:#FBFAF5; border:2px solid #15171C; font-size:18px; font-weight:bold; line-height:1.3; color:#15171C; text-decoration:none;"><span style="font-size:26px;">&#128736;</span><br>I'm making one now</a>
+                  </td>
+                  <td class="stack" width="33%" valign="top" style="padding:0 0 0 8px;">
+                    <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-look" style="display:block; padding:20px 20px; background:#FBFAF5; border:2px solid #15171C; font-size:18px; font-weight:bold; line-height:1.3; color:#15171C; text-decoration:none;"><span style="font-size:26px;">&#128064;</span><br>I'll have a look first</a>
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Sign-off -->
+          <!-- Sign-off: visit button left, team right -->
           <tr>
-            <td class="px" style="padding:36px 40px 40px;">
-              <p style="margin:0; font-size:17px; line-height:1.5;">See what your school is making:</p>
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
+            <td class="px" style="padding:48px 56px 48px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td bgcolor="#15171C" style="background:#15171C;">
-                    <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-visit" style="display:inline-block; padding:14px 26px; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:17px; color:#ECEEE9; text-decoration:none;">Visit Bricolage &rarr;</a>
+                  <td class="stack stack-gap" valign="bottom" style="padding:0;">
+                    <p style="margin:0; font-size:18px; line-height:1.5;">See what your school is making:</p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
+                      <tr>
+                        <td bgcolor="#15171C" style="background:#15171C;">
+                          <a href="https://devs67.github.io/Bricolage/qr.html?src=launch-visit" style="display:inline-block; padding:16px 30px; font-family:'Arial Black', Arial, Helvetica, sans-serif; font-weight:900; font-size:18px; color:#ECEEE9; text-decoration:none;">Visit Bricolage &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="stack to-left" align="right" valign="bottom" style="padding:0; text-align:right;">
+                    <p style="margin:0; font-size:17px; line-height:1.5;">Let's design,<br><b>The Design Team</b><br><span style="color:#4A4F57;">Dev, Ishitha, Chaitra, Sushma, Suhail</span></p>
                   </td>
                 </tr>
               </table>
-              <p style="margin:28px 0 0; font-size:16px; line-height:1.5;">Let's design,<br><b>The Design Team</b><br><span style="color:#4A4F57;">Dev, Ishitha, Chaitra, Sushma, Suhail</span></p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td class="px" style="padding:20px 40px 26px; border-top:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:12px; line-height:1.6; color:#4A4F57;">
+            <td class="px" style="padding:22px 56px 28px; border-top:2px solid #15171C; font-family:'Courier New', Courier, monospace; font-size:13px; line-height:1.6; color:#4A4F57;">
               <b>bricolage</b> <i>(n.)</i>: creating something new from whatever is at hand.<br>
               Bricolage &middot; Design Department &middot; Sreenidhi International School
             </td>
