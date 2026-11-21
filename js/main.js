@@ -419,13 +419,15 @@
           </dl>
           ${p.unit ? `<details class="educators"><summary>For educators</summary><p><strong>Unit / brief:</strong> ${esc(p.unit)}</p></details>` : ""}
         </div>
-      </div>`;
+      </div>
+      ${window.SOCIAL ? `<section class="social" id="social" aria-label="Likes, nominations, follows and comments"></section>` : ""}`;
   }
 
   function openProject(id) {
     const p = projects.find((x) => x.id === id);
     if (!p) return;
     sheetBody.innerHTML = sheetHTML(p);
+    if (window.SOCIAL) window.SOCIAL.show($("#social", sheetBody), p); // likes & comments: js/social.js
     if (!sheet.open) sheet.showModal();
     sheetInner.scrollTop = 0;
     if (lenis) lenis.stop();
