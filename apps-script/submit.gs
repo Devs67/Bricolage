@@ -144,8 +144,8 @@ function setup() {
        Google asks for: it makes the sheet and prints its link in the log.
     3. Deploy → Manage deployments → edit (pencil) → Version: "New version" → Deploy.
 */
-const CLIENT_ID = "";      // e.g. "1234-abcd.apps.googleusercontent.com"
-const SCHOOL_DOMAIN = "";  // the part after @ in school email addresses, e.g. "school.edu.in"
+const CLIENT_ID = "133690369218-jthoqki5lhiprkklo2mauedr2ik14gon.apps.googleusercontent.com";  // Google sign-in client ID, same as in js/social.js
+const SCHOOL_DOMAIN = "sis.edu.in";  // the part after @ in school email addresses, e.g. "school.edu.in"
 
 const TABS = {
   Likes: ["Time", "Project", "Email", "Name"],

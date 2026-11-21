@@ -11,8 +11,8 @@
 const SOCIAL_URL = "https://script.google.com/macros/s/AKfycbxXl2Wk31XvgT2H4AsqqtmYTbNVsz2iVX9F7Pt5xjaEbhGKn9CmbL6LHpPEP340_zGN/exec";
 // Google sign-in: the OAuth client ID (ends in .apps.googleusercontent.com), and the school's
 // email domain so the sign-in only offers school accounts. Both must match apps-script/submit.gs.
-const GOOGLE_CLIENT_ID = "";
-const SCHOOL_DOMAIN = "";
+const GOOGLE_CLIENT_ID = "133690369218-jthoqki5lhiprkklo2mauedr2ik14gon.apps.googleusercontent.com";
+const SCHOOL_DOMAIN = "sis.edu.in";
 
 window.SOCIAL = (() => {
   if (!GOOGLE_CLIENT_ID) return null;
